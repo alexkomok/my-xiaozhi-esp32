@@ -7,7 +7,7 @@ that the cloud AI controls through MCP tools; this board uses the WeChat chat st
 and Russian locale.
 
 ```sh
-python scripts/build.py spotpear/esp32s3-max35-tv-w --name esp32s3-max35-tv-w
+python scripts/build.py spotpear/esp32s3-max35-tv-w --name esp32s3-max35-tv-w --language ru-RU
 ```
 
 ## Behavior specific to this board
@@ -34,6 +34,7 @@ python scripts/build.py spotpear/esp32s3-max35-tv-w --name esp32s3-max35-tv-w
 | `self.sdcard.list_images` | List only JPG/JPEG/PNG files, including camera photos. |
 | `self.sdcard.list_videos` | List only MJPEG videos. |
 | `self.sdcard.list_music` | List only MP3 files. |
+| `self.sdcard.delete_file` | Permanently delete a file using its relative SD card path. |
 | `self.sdcard.read_image` | Return an image to the AI for visual analysis (up to 8 MB). |
 | `self.sdcard.read_video_frame` | Return one frame of an MJPEG video to the AI (`frame_index`). |
 | `self.sdcard.show_image` | Show a JPEG or PNG fullscreen on the display. |

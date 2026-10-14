@@ -498,6 +498,34 @@ private:
         mcp_server.AddTool(
             "self.sdcard.list_music", "List only the MP3 music files on the microSD card.",
             PropertyList(), [this](const PropertyList&) -> ToolResult { return ListMedia("audio"); });
+        Property delete_path("path", kPropertyTypeString);
+        delete_path.SetMaxLength(128);
+        mcp_server.AddTool(
+            "self.sdcard.delete_file",
+            "Permanently delete a regular file from the microSD card. Only call this when the user "
+            "explicitly asks to delete the file. Use a relative path returned by a listing tool.",
+            PropertyList({delete_path}), [this](const PropertyList& properties) -> ToolResult {
+                const std::string path = properties["path"].value<std::string>();
+                if (!IsSafeMediaPath(path)) {
+                    return std::unexpected("Path must be a safe relative path on the SD card");
+                }
+                if (!EnsureSdCardMounted()) {
+                    return std::unexpected("Could not mount the SD card");
+                }
+
+                const std::string full_path = std::string(SD_CARD_MOUNT_POINT) + "/" + path;
+                struct stat info = {};
+                if (stat(full_path.c_str(), &info) != 0) {
+                    return std::unexpected("File not found on the SD card");
+                }
+                if (!S_ISREG(info.st_mode)) {
+                    return std::unexpected("Path does not name a regular file");
+                }
+                if (remove(full_path.c_str()) != 0) {
+                    return std::unexpected("Could not delete the file from the SD card");
+                }
+                return ReturnValue{"Deleted " + path};
+            });
         mcp_server.AddTool(
             "self.sdcard.close_media",
             "Close the fullscreen picture or stop the video and return to the chat screen.",
