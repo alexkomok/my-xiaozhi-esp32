@@ -30,7 +30,8 @@ static constexpr bool kConfiguredVFlip = false;
 #endif
 #endif
 
-Esp32Camera::Esp32Camera(const camera_config_t& config) {
+Esp32Camera::Esp32Camera(const camera_config_t& config, bool rotate_preview_clockwise_90)
+    : rotate_preview_clockwise_90_(rotate_preview_clockwise_90) {
     esp_err_t err = esp_camera_init(&config);
     if (err != ESP_OK) {
         ESP_LOGE(TAG, "esp_camera_init failed with error 0x%x", err);
@@ -139,6 +140,52 @@ bool Esp32Camera::Capture() {
                 heap_caps_free(preview_data);
             }
         }
+    } else if (current_fb_->format == PIXFORMAT_YUV422) {
+        auto display = Board::GetInstance().GetDisplay();
+        if (display != nullptr) {
+            size_t pixel_count = current_fb_->width * current_fb_->height;
+            size_t rgb888_size = pixel_count * 3;
+            size_t rgb565_size = pixel_count * sizeof(uint16_t);
+            uint8_t* rgb888_data =
+                (uint8_t*)heap_caps_malloc(rgb888_size, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
+            uint8_t* preview_data =
+                (uint8_t*)heap_caps_malloc(rgb565_size, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
+
+            if (rgb888_data != nullptr && preview_data != nullptr &&
+                fmt2rgb888(current_fb_->buf, current_fb_->len, current_fb_->format,
+                           rgb888_data)) {
+                uint16_t* preview_pixels = (uint16_t*)preview_data;
+                uint16_t preview_width = rotate_preview_clockwise_90_ ? current_fb_->height
+                                                                      : current_fb_->width;
+                uint16_t preview_height = rotate_preview_clockwise_90_ ? current_fb_->width
+                                                                       : current_fb_->height;
+                for (size_t i = 0; i < pixel_count; i++) {
+                    uint8_t blue = rgb888_data[i * 3];
+                    uint8_t green = rgb888_data[i * 3 + 1];
+                    uint8_t red = rgb888_data[i * 3 + 2];
+                    uint16_t pixel = ((red >> 3) << 11) | ((green >> 2) << 5) | (blue >> 3);
+                    size_t preview_index = i;
+                    if (rotate_preview_clockwise_90_) {
+                        size_t x = i % current_fb_->width;
+                        size_t y = i / current_fb_->width;
+                        preview_index = x * current_fb_->height + current_fb_->height - 1 - y;
+                    }
+                    preview_pixels[preview_index] = pixel;
+                }
+
+                display->SetPreviewImage(std::make_unique<LvglAllocatedImage>(
+                    preview_data, rgb565_size, preview_width, preview_height,
+                    preview_width * sizeof(uint16_t), LV_COLOR_FORMAT_RGB565));
+                preview_data = nullptr;
+            }
+
+            if (rgb888_data != nullptr) {
+                heap_caps_free(rgb888_data);
+            }
+            if (preview_data != nullptr) {
+                heap_caps_free(preview_data);
+            }
+        }
     } else if (current_fb_->format == PIXFORMAT_JPEG) {
         // JPEG format preview usually requires decoding, skip preview display for now, just log
         ESP_LOGW(TAG, "JPEG capture success, len=%zu, but not supported for preview",
@@ -149,6 +196,66 @@ bool Esp32Camera::Capture() {
              current_fb_->height, current_fb_->len, current_fb_->format);
 
     return true;
+}
+
+bool Esp32Camera::SaveJpeg(const char* path, uint8_t quality) {
+    if (encoder_thread_.joinable()) {
+        encoder_thread_.join();
+    }
+    if (current_fb_ == nullptr) {
+        return false;
+    }
+
+    FILE* file = fopen(path, "wb");
+    if (file == nullptr) {
+        ESP_LOGE(TAG, "Could not open %s for writing", path);
+        return false;
+    }
+
+    bool ok = false;
+    if (current_fb_->format == PIXFORMAT_JPEG) {
+        ok = fwrite(current_fb_->buf, 1, current_fb_->len, file) == current_fb_->len;
+    } else {
+        v4l2_pix_fmt_t format;
+        uint8_t* source = current_fb_->buf;
+        size_t source_len = current_fb_->len;
+        if (current_fb_->format == PIXFORMAT_YUV422) {
+            format = V4L2_PIX_FMT_YUYV;
+        } else if (current_fb_->format == PIXFORMAT_RGB565 && encode_buf_ != nullptr) {
+            format = V4L2_PIX_FMT_RGB565;
+            source = encode_buf_;
+            source_len = encode_buf_size_;
+        } else {
+            ESP_LOGE(TAG, "Unsupported pixel format for saving: %d", current_fb_->format);
+            fclose(file);
+            return false;
+        }
+
+        size_t written = 0;
+        struct WriteState {
+            FILE* file;
+            size_t* written;
+        } state = {file, &written};
+        bool encoded = image_to_jpeg_cb(
+            source, source_len, current_fb_->width, current_fb_->height, format, quality,
+            [](void* arg, size_t index, const void* data, size_t len) -> size_t {
+                auto* state = static_cast<WriteState*>(arg);
+                if (data == nullptr || len == 0) {
+                    return 0;
+                }
+                size_t count = fwrite(data, 1, len, state->file);
+                *state->written += count;
+                return count;
+            },
+            &state);
+        ok = encoded && written > 0;
+    }
+
+    ok = (fclose(file) == 0) && ok;
+    if (!ok) {
+        remove(path);
+    }
+    return ok;
 }
 
 bool Esp32Camera::SetHMirror(bool enabled) {

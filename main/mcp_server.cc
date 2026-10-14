@@ -73,6 +73,25 @@ void McpServer::AddCommonTools() {
 
 #ifdef HAVE_LVGL
     auto display = board.GetDisplay();
+    if (display != nullptr && display->SupportsGuiOperations()) {
+#if CONFIG_USE_WECHAT_MESSAGE_STYLE
+        AddTool("self.screen.scroll",
+            "When the user asks to scroll the chat, call this tool instead of describing or "
+            "printing the tool name. Scroll about one screen: direction `up` shows older "
+            "messages; `down` returns to newer messages. Make one call per requested scroll.",
+                PropertyList({Property("direction", kPropertyTypeString)}),
+                [display](const PropertyList& properties) -> ReturnValue {
+                    auto direction = properties["direction"].value<std::string>();
+                    if (direction == "up") {
+                        return display->ScrollChat(false);
+                    }
+                    if (direction == "down") {
+                        return display->ScrollChat(true);
+                    }
+                    return false;
+                });
+#endif
+    }
     if (display && display->GetTheme() != nullptr) {
         AddTool("self.screen.set_theme",
                 "Set the theme of the screen. The theme can be `light` or `dark`.",

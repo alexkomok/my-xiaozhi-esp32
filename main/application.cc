@@ -644,12 +644,20 @@ void Application::InitializeProtocol() {
                     if (!TextGlyphPayload::Parse(root, glyphs, bpp)) {
                         glyphs.clear();
                     }
-                    ESP_LOGI(TAG, "<< %s", text->valuestring);
-                    Schedule([display, message = std::string(text->valuestring),
-                              glyphs = std::move(glyphs), bpp]() {
-                        display->AddTextGlyphs(glyphs, bpp);
-                        display->SetChatMessage("assistant", message.c_str());
-                    });
+                    std::string message(text->valuestring);
+                    constexpr char kScrollToolMarker[] = "% self.screen.scroll";
+                    size_t marker_position = message.find(kScrollToolMarker);
+                    if (marker_position != std::string::npos) {
+                        message.erase(marker_position);
+                    }
+                    if (message.find_first_not_of(" \t\r\n") != std::string::npos) {
+                        ESP_LOGI(TAG, "<< %s", message.c_str());
+                        Schedule([display, message = std::move(message),
+                                  glyphs = std::move(glyphs), bpp]() {
+                            display->AddTextGlyphs(glyphs, bpp);
+                            display->SetChatMessage("assistant", message.c_str());
+                        });
+                    }
                 }
             }
         } else if (strcmp(type->valuestring, "stt") == 0) {

@@ -24,6 +24,11 @@ protected:
     lv_obj_t* side_bar_ = nullptr;
     lv_obj_t* bottom_bar_ = nullptr;
     lv_obj_t* preview_image_ = nullptr;
+    lv_obj_t* media_overlay_ = nullptr;
+    lv_obj_t* media_image_ = nullptr;
+    uint8_t* media_frame_buffer_ = nullptr;
+    size_t media_frame_buffer_size_ = 0;
+    lv_img_dsc_t media_frame_desc_{};
     lv_obj_t* emoji_label_ = nullptr;
     lv_obj_t* emoji_image_ = nullptr;
     std::unique_ptr<LvglGif> gif_controller_ = nullptr;
@@ -47,7 +52,12 @@ public:
     virtual void SetEmotion(const char* emotion) override;
     virtual void SetChatMessage(const char* role, const char* content) override;
     virtual void ClearChatMessages() override;
+    virtual bool ScrollChat(bool down) override;
     virtual void SetPreviewImage(std::unique_ptr<LvglImage> image) override;
+    virtual bool ShowMediaFrame(const uint8_t* data, size_t width, size_t height,
+                                size_t stride) override;
+    virtual bool ShowPngImage(const uint8_t* data, size_t size) override;
+    virtual void ClearMediaFrame() override;
     virtual void SetupUI() override;
     // Add theme switching function
     virtual void SetTheme(Theme* theme) override;

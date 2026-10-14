@@ -11,6 +11,7 @@
 #include <esp_psram.h>
 #include <material_symbols.h>
 #include <noto_emoji.h>
+#include <src/draw/lv_image_decoder_private.h>
 #include <src/misc/cache/lv_cache.h>
 #include <algorithm>
 #include <cstring>
@@ -323,6 +324,7 @@ MipiLcdDisplay::MipiLcdDisplay(esp_lcd_panel_io_handle_t panel_io, esp_lcd_panel
 
 LcdDisplay::~LcdDisplay() {
     SetPreviewImage(nullptr);
+    ClearMediaFrame();
 
     // Clean up GIF controller
     if (gif_controller_) {
@@ -1128,6 +1130,193 @@ void LcdDisplay::ClearChatMessages() {
     }
 }
 #endif
+
+bool LcdDisplay::ShowMediaFrame(const uint8_t* data, size_t width, size_t height, size_t stride) {
+    DisplayLockGuard lock(this);
+    if (content_ == nullptr || data == nullptr || width == 0 || height == 0 ||
+        width > SIZE_MAX / 2 / height || stride < width * sizeof(uint16_t)) {
+        return false;
+    }
+
+    size_t frame_size = width * height * sizeof(uint16_t);
+    if (frame_size > media_frame_buffer_size_) {
+        uint8_t* new_buffer = static_cast<uint8_t*>(
+            heap_caps_malloc(frame_size, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT));
+        if (new_buffer == nullptr) {
+            return false;
+        }
+        if (media_frame_buffer_ != nullptr) {
+            heap_caps_free(media_frame_buffer_);
+        }
+        media_frame_buffer_ = new_buffer;
+        media_frame_buffer_size_ = frame_size;
+    }
+
+    for (size_t row = 0; row < height; row++) {
+        memcpy(media_frame_buffer_ + row * width * sizeof(uint16_t), data + row * stride,
+               width * sizeof(uint16_t));
+    }
+
+    if (media_overlay_ == nullptr) {
+        lv_obj_t* screen = lv_obj_get_screen(content_);
+        media_overlay_ = lv_obj_create(screen);
+        lv_obj_set_size(media_overlay_, width_, height_);
+        lv_obj_center(media_overlay_);
+        lv_obj_set_style_radius(media_overlay_, 0, 0);
+        lv_obj_set_style_border_width(media_overlay_, 0, 0);
+        lv_obj_set_style_pad_all(media_overlay_, 0, 0);
+        lv_obj_set_style_bg_color(media_overlay_, lv_color_black(), 0);
+        lv_obj_set_style_bg_opa(media_overlay_, LV_OPA_COVER, 0);
+        lv_obj_set_scrollbar_mode(media_overlay_, LV_SCROLLBAR_MODE_OFF);
+        lv_obj_clear_flag(media_overlay_, LV_OBJ_FLAG_SCROLLABLE);
+        media_image_ = lv_image_create(media_overlay_);
+        lv_obj_center(media_image_);
+    }
+
+    media_frame_desc_.data_size = frame_size;
+    media_frame_desc_.data = media_frame_buffer_;
+    media_frame_desc_.header.magic = LV_IMAGE_HEADER_MAGIC;
+    media_frame_desc_.header.cf = LV_COLOR_FORMAT_RGB565;
+    media_frame_desc_.header.w = width;
+    media_frame_desc_.header.h = height;
+    media_frame_desc_.header.stride = width * sizeof(uint16_t);
+    lv_image_set_src(media_image_, &media_frame_desc_);
+
+    lv_coord_t zoom_w = (LV_HOR_RES * 256) / width;
+    lv_coord_t zoom_h = (LV_VER_RES * 256) / height;
+    lv_coord_t zoom = std::min(zoom_w, zoom_h);
+    if (zoom > 256) {
+        zoom = 256;
+    }
+    lv_image_set_scale(media_image_, zoom);
+    lv_obj_center(media_image_);
+    lv_obj_move_foreground(media_overlay_);
+    return true;
+}
+
+bool LcdDisplay::ShowPngImage(const uint8_t* data, size_t size) {
+    if (data == nullptr || size < 24 || size > 8 * 1024 * 1024 ||
+        memcmp(data, "\x89PNG\r\n\x1a\n", 8) != 0) {
+        ESP_LOGE(TAG, "PNG signature or file size is invalid (%u bytes)", size);
+        return false;
+    }
+
+    const size_t png_width = (static_cast<size_t>(data[16]) << 24) |
+                             (static_cast<size_t>(data[17]) << 16) |
+                             (static_cast<size_t>(data[18]) << 8) | data[19];
+    const size_t png_height = (static_cast<size_t>(data[20]) << 24) |
+                              (static_cast<size_t>(data[21]) << 16) |
+                              (static_cast<size_t>(data[22]) << 8) | data[23];
+    if (png_width == 0 || png_height == 0 || png_width > 4096 || png_height > 4096 ||
+        png_width > (1024 * 1024) / png_height) {
+        ESP_LOGE(TAG, "PNG dimensions exceed the supported limit: %ux%u", png_width, png_height);
+        return false;
+    }
+
+    uint8_t* rgb565_data = nullptr;
+    size_t width = 0;
+    size_t height = 0;
+    {
+        DisplayLockGuard lock(this);
+        if (!lock || content_ == nullptr) {
+            return false;
+        }
+
+        lv_img_dsc_t source = {};
+        source.data = const_cast<uint8_t*>(data);
+        source.data_size = size;
+        source.header.magic = LV_IMAGE_HEADER_MAGIC;
+        source.header.cf = LV_COLOR_FORMAT_RAW;
+
+        lv_image_decoder_dsc_t decoder = {};
+        lv_image_decoder_args_t decoder_args = {};
+        decoder_args.no_cache = true;
+        if (lv_image_decoder_open(&decoder, &source, &decoder_args) != LV_RESULT_OK ||
+            decoder.decoded == nullptr) {
+            ESP_LOGE(TAG, "LVGL PNG decoder could not decode the source");
+            return false;
+        }
+
+        const lv_draw_buf_t* decoded = decoder.decoded;
+        width = decoded->header.w;
+        height = decoded->header.h;
+        if (decoded->header.cf != LV_COLOR_FORMAT_ARGB8888 || width == 0 || height == 0 ||
+            decoded->header.stride < width * sizeof(lv_color32_t)) {
+            ESP_LOGE(TAG, "PNG decoder returned an unsupported image format");
+            lv_image_decoder_close(&decoder);
+            return false;
+        }
+
+        size_t output_size = width * height * sizeof(uint16_t);
+        rgb565_data = static_cast<uint8_t*>(
+            heap_caps_malloc(output_size, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT));
+        if (rgb565_data == nullptr) {
+            ESP_LOGE(TAG, "Not enough PSRAM for the decoded PNG");
+            lv_image_decoder_close(&decoder);
+            return false;
+        }
+
+        uint16_t* destination = reinterpret_cast<uint16_t*>(rgb565_data);
+        for (size_t y = 0; y < height; y++) {
+            const lv_color32_t* source_row = reinterpret_cast<const lv_color32_t*>(
+                decoded->data + y * decoded->header.stride);
+            for (size_t x = 0; x < width; x++) {
+                const lv_color32_t& source_pixel = source_row[x];
+                uint8_t red = static_cast<uint8_t>(source_pixel.red * source_pixel.alpha / 255);
+                uint8_t green =
+                    static_cast<uint8_t>(source_pixel.green * source_pixel.alpha / 255);
+                uint8_t blue = static_cast<uint8_t>(source_pixel.blue * source_pixel.alpha / 255);
+                destination[y * width + x] = ((red >> 3) << 11) | ((green >> 2) << 5) |
+                                             (blue >> 3);
+            }
+        }
+        lv_image_decoder_close(&decoder);
+    }
+
+    bool displayed = ShowMediaFrame(rgb565_data, width, height, width * sizeof(uint16_t));
+    heap_caps_free(rgb565_data);
+    if (!displayed) {
+        ESP_LOGE(TAG, "Could not display decoded PNG frame");
+    }
+    return displayed;
+}
+
+void LcdDisplay::ClearMediaFrame() {
+    DisplayLockGuard lock(this);
+    if (media_overlay_ != nullptr) {
+        lv_obj_del(media_overlay_);
+        media_overlay_ = nullptr;
+        media_image_ = nullptr;
+    }
+    if (media_frame_buffer_ != nullptr) {
+        heap_caps_free(media_frame_buffer_);
+        media_frame_buffer_ = nullptr;
+        media_frame_buffer_size_ = 0;
+    }
+    bzero(&media_frame_desc_, sizeof(media_frame_desc_));
+}
+
+bool LcdDisplay::ScrollChat(bool down) {
+#if CONFIG_USE_WECHAT_MESSAGE_STYLE
+    DisplayLockGuard lock(this);
+    if (content_ == nullptr) {
+        return false;
+    }
+
+    lv_obj_update_layout(content_);
+    int32_t step = lv_obj_get_height(content_) * 3 / 4;
+    if (step <= 0) {
+        return false;
+    }
+
+    int32_t scroll_y = lv_obj_get_scroll_y(content_);
+    lv_obj_scroll_to_y(content_, scroll_y + (down ? step : -step), LV_ANIM_ON);
+    return true;
+#else
+    (void)down;
+    return false;
+#endif
+}
 
 void LcdDisplay::SetEmotion(const char* emotion) {
     if (!setup_ui_called_) {

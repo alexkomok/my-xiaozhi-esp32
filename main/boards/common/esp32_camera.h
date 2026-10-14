@@ -21,6 +21,7 @@ struct JpegChunk {
 class Esp32Camera : public Camera {
 private:
     bool streaming_on_ = false;
+    bool rotate_preview_clockwise_90_ = false;
     bool swap_bytes_enabled_ = true;  // Swap pixel byte order for RGB565, enabled by default
     std::string explain_url_;
     std::string explain_token_;
@@ -30,11 +31,13 @@ private:
     size_t encode_buf_size_ = 0;
 
 public:
-    Esp32Camera(const camera_config_t& config);
+    Esp32Camera(const camera_config_t& config, bool rotate_preview_clockwise_90 = false);
     ~Esp32Camera();
 
     virtual void SetExplainUrl(const std::string& url, const std::string& token) override;
     virtual bool Capture() override;
+    // Encodes the frame from the last Capture() as JPEG and writes it to path.
+    bool SaveJpeg(const char* path, uint8_t quality = 85);
     virtual bool SetHMirror(bool enabled) override;
     virtual bool SetVFlip(bool enabled) override;
     virtual bool SetSwapBytes(bool enabled) override;

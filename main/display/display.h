@@ -46,6 +46,11 @@ public:
     virtual void SetEmotion(const char* emotion);
     virtual void SetChatMessage(const char* role, const char* content);
     virtual void ClearChatMessages();
+    // Scrolls the chat history one page; returns false if the display has no scrollable chat.
+    virtual bool ScrollChat(bool down) {
+        (void)down;
+        return false;
+    }
     virtual void SetTheme(Theme* theme);
     virtual Theme* GetTheme() { return current_theme_; }
     virtual void UpdateStatusBar(bool update_all = false);
@@ -75,6 +80,23 @@ public:
     }
     virtual void LoadAssets() {}
     virtual void SetPreviewImage(std::unique_ptr<LvglImage> image);
+    // Shows an RGB565 frame fullscreen above the chat screen.
+    virtual bool ShowMediaFrame(const uint8_t* data, size_t width, size_t height,
+                                size_t stride) {
+        (void)data;
+        (void)width;
+        (void)height;
+        (void)stride;
+        return false;
+    }
+    // Decodes an in-memory PNG (up to 1 megapixel) and shows it fullscreen.
+    virtual bool ShowPngImage(const uint8_t* data, size_t size) {
+        (void)data;
+        (void)size;
+        return false;
+    }
+    // Removes the fullscreen media overlay and frees its frame buffer.
+    virtual void ClearMediaFrame() {}
     virtual bool SetTextFont(std::shared_ptr<LvglFont> text_font) {
         (void)text_font;
         return false;

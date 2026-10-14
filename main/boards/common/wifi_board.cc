@@ -333,10 +333,19 @@ std::string WifiBoard::GetDeviceStatusJson() {
     auto& wifi = WifiManager::GetInstance();
     auto network = cJSON_CreateObject();
     cJSON_AddStringToObject(network, "type", "wifi");
-    cJSON_AddStringToObject(network, "ssid", wifi.GetSsid().c_str());
-    int rssi = wifi.GetRssi();
-    const char* signal = rssi >= -60 ? "strong" : (rssi >= -70 ? "medium" : "weak");
-    cJSON_AddStringToObject(network, "signal", signal);
+    bool connected = wifi.IsConnected();
+    cJSON_AddBoolToObject(network, "connected", connected);
+    if (connected) {
+        cJSON_AddStringToObject(network, "ssid", wifi.GetSsid().c_str());
+        cJSON_AddStringToObject(network, "ip", wifi.GetIpAddress().c_str());
+        cJSON_AddNumberToObject(network, "channel", wifi.GetChannel());
+        int rssi = wifi.GetRssi();
+        cJSON_AddNumberToObject(network, "rssi", rssi);
+        const char* signal = rssi >= -60 ? "strong" : (rssi >= -70 ? "medium" : "weak");
+        cJSON_AddStringToObject(network, "signal", signal);
+    } else {
+        cJSON_AddStringToObject(network, "signal", "disconnected");
+    }
     cJSON_AddItemToObject(root, "network", network);
 
     // Chip temperature
