@@ -11,10 +11,7 @@
                 "display_style": "wechat"
             },
             "sdkconfig_append": [
-                "CONFIG_ESPTOOLPY_FLASHSIZE_16MB=y",
-                "CONFIG_PARTITION_TABLE_CUSTOM_FILENAME=\"partitions/v2/16m.csv\"",
                 "CONFIG_SPIRAM_MODE_OCT=y",
-                "CONFIG_LANGUAGE_RU_RU=y",
                 "CONFIG_USE_DEVICE_AEC=y",
                 "CONFIG_CAMERA_GC0308=n",
                 "CONFIG_CAMERA_OV5640=y",

@@ -3,8 +3,7 @@
 ESP32-S3-R8 board with 16 MB flash, 8 MB PSRAM, a 480x320 ST7796S display,
 OV5640 camera (DVP, YUV422), ES7210/ES8311 audio with device-side AEC, a microSD
 slot, and an NS4150B speaker amplifier. The firmware is XiaoZhi, a voice assistant
-that the cloud AI controls through MCP tools; this board uses the WeChat chat style
-and Russian locale.
+that the cloud AI controls through MCP tools; this board uses the WeChat chat style.
 
 ## Build and deploy
 
@@ -22,6 +21,9 @@ Build the firmware from the repository root:
 ```sh
 python scripts/build.py spotpear/esp32s3-max35-tv-w --name esp32s3-max35-tv-w --language ru-RU
 ```
+
+The `--language` option selects the Russian locale; omit it or choose another
+locale to use a different language.
 
 Flash to the board (replace `COM5` with your port; on Linux/macOS use e.g. `/dev/ttyUSB0`):
 
