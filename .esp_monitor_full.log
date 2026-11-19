@@ -1,0 +1,247 @@
+==== monitor session COM5@115200 opened 2026-11-18 15:21:47 ====
+I (101) cpu_start: GPIO 44 and 43 are used as console UART I/O pESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0x15 (USB_UART_CHIP_RESET),boot:0x8 (SPI_FAST_FLASH_BOOT)
+Saved PC:0x403830a2
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x544
+load:0x403c8700,len:0xd14
+load:0x403cb700,len:0x2eb4
+entry 0x403c88f4
+I (34) octal_psram: vendor id    : 0x0d (AP)
+I (34) octal_psram: dev id       : 0x02 (generation 3)
+I (35) octal_psram: density      : 0x03 (64 Mbit)
+I (36) octal_psram: good-die     : 0x01 (Pass)
+I (40) octal_psram: Latency      : 0x01 (Fixed)
+I (45) octal_psram: VCC          : 0x01 (3V)
+==== board reset ====
+I (49) octal_psram: SRF          : 0x01 (Fast Refresh)
+I (53) octal_psram: BurstType    : 0x01 (Hybrid Wrap)
+I (58) octal_psram: BurstLen     : 0x01 (32 Byte)
+I (63) octal_psram: Readlatency  : 0x02 (10 cycles@Fixed)
+I (68) octal_psram: DriveStrength: 0x00 (1/1)
+I (72) MSPI Timing: Enter psram timing tuning
+I (77) esp_psram: Found 8MB PSRAM device
+I (80) esp_psram: Speed: 80MHz
+I (82) cpu_start: Multicore app
+I (97) cpu_start: GPIO 44 and 43 are used as console UART I/O pins
+I (97) cpu_start: Pro cpu start user code
+I (97) cpu_start: cpu freq: 240000000 Hz
+I (99) app_init: Application information:
+I (102) app_init: Project name:     xiaozhi
+I (106) app_init: App version:      2.5.0
+I (110) app_init: Compile time:     Nov 18 2026 15:14:32
+I (115) app_init: ELF file SHA256:  00ed5fe07...
+I (119) app_init: ESP-IDF:          v6.1-dirty
+I (124) efuse_init: Min chip rev:     v0.0
+I (127) efuse_init: Max chip rev:     v0.99 
+I (131) efuse_init: Chip rev:         v0.2
+I (135) heap_init: Initializing. RAM available for dynamic allocation:
+I (141) heap_init: At 3FCAF900 len 00039E10 (231 KiB): RAM
+I (147) heap_init: At 3FCE9710 len 00005724 (21 KiB): RAM
+I (152) heap_init: At 3FCF0000 len 00008000 (32 KiB): DRAM
+I (157) heap_init: At 600FE000 len 00001FD8 (7 KiB): RTCRAM
+I (162) esp_psram: Adding pool of 8192K of PSRAM memory to heap allocator
+I (169) spi_flash: detected chip: generic
+I (173) spi_flash: flash io: qio
+I (176) sleep_gpio: Configure to isolate all GPIO pins in sleep state
+I (182) sleep_gpio: Enable automatic switching of GPIO sleep configuration
+I (189) main_task: Started on CPU0
+I (189) esp_psram: Reserving pool of 100K of internal memory for DMA/internal allocations
+I (199) main_task: Calling app_main()
+I (219) Board: UUID=4ee80cec-6219-4323-910f-8f39501b1e75 SKU=esp32s3-max35-tv-w
+I (219) button: IoT Button Version: 4.2.1
+I (339) Display: Power management not supported
+I (439) LcdDisplay: Turning display on
+I (439) LcdDisplay: Initialize LVGL library
+I (439) LcdDisplay: Added 2560KB LVGL pool in PSRAM
+I (439) LcdDisplay: Use 2MB of PSRAM for image cache
+I (449) LcdDisplay: Initialize LVGL port
+I (449) LcdDisplay: Adding LCD display
+I (449) LVGL: Starting LVGL task
+I (459) s3 ll_cam: DMA Channel=1
+I (459) cam_hal: cam init ok
+I (469) ov3640: Mismatch PID=0x5640
+I (469) ov3660: Mismatch PID=0x5640
+I (469) camera: Camera PID=0x5640 VER=0x00 MIDL=0x00 MIDH=0x00
+I (469) camera: Detected OV5640 camera
+I (479) camera: Detected camera at address=0x3c
+I (1159) cam_hal: PSRAM DMA mode enabled
+I (1159) s3 ll_cam: node_size: 3840, nodes_per_line: 1, lines_per_node: 6
+I (1159) s3 ll_cam: dma_half_buffer_min:  3840, dma_half_buffer: 15360, lines_per_half_buffer: 24, dma_buffer_size: 153600
+I (1169) cam_hal: buffer_size: 153600, half_buffer_size: 15360, node_buffer_size: 3840, node_cnt: 40, total_cnt: 11
+I (1179) cam_hal: Allocating 168976 Byte frame buffer in PSRAM
+I (1179) cam_hal: Frame[0]: Offset: 16, Addr: 0x3C6613E0
+I (1189) cam_hal: Allocating 168976 Byte frame buffer in PSRAM
+I (1189) cam_hal: Frame[1]: Offset: 16, Addr: 0x3C68A810
+I (1199) cam_hal: cam config ok
+I (1209) ov5640: Set PLL: bypass: 0, multiplier: 8, sys_div: 1, pre_div: 1, root_2x: 0, pclk_root_div: 1, pclk_manual: 1, pclk_div: 4
+I (1209) ov5640: Calculated XVCLK: 20000000 Hz, REFIN: 20000000 Hz, VCO: 160000000 Hz, PLL_CLK: 64000000 Hz, SYSCLK: 16000000 Hz, PCLK: 8000000 Hz
+I (1249) Esp32Camera: Camera initialized: format=1
+I (1249) MCP: Add tool: self.sdcard.list_media
+I (1249) MCP: Add tool: self.sdcard.list_images
+I (1249) MCP: Add tool: self.sdcard.list_videos
+I (1249) MCP: Add tool: self.sdcard.list_music
+I (1259) MCP: Add tool: self.sdcard.delete_file
+I (1259) MCP: Add tool: self.sdcard.close_media
+I (1269) MCP: Add tool: self.sdcard.save_camera_photo
+I (1269) MCP: Add tool: self.sdcard.read_image
+I (1279) MCP: Add tool: self.sdcard.save_image
+I (1279) MCP: Add tool: self.sdcard.show_image
+I (1279) MCP: Add tool: self.sdcard.read_video_frame
+I (1289) MCP: Add tool: self.sdcard.play_video
+I (1289) MCP: Add tool: self.sdcard.stop_video
+I (1299) MCP: Add tool: self.usbmsc.expose
+I (1299) MCP: Add tool: self.usbmsc.retract
+I (1299) MCP: Add tool: self.usbmsc.status
+I (1309) Backlight: Set brightness to 75
+I (1309) StateMachine: State: unknown -> starting
+W (1419) i2s_common: the rx channel on I2S0 is switched from master to slave for full-duplex mode
+I (1419) BoxAudioCodec: Duplex channels created
+I (1429) ES8311: Work in Slave mode
+I (1429) ES7210: Work in Slave mode
+I (1439) ES7210: Enable ES7210_INPUT_MIC1
+I (1439) ES7210: Enable ES7210_INPUT_MIC2
+I (1439) ES7210: Enable ES7210_INPUT_MIC3
+I (1449) ES7210: Enable ES7210_INPUT_MIC4
+I (1449) ES7210: Enable TDM mode
+I (1449) BoxAudioCodec: BoxAudioDevice initialized
+I (1459) AudioCodec: Audio codec started
+I (1459) Application: After board/audio init
+I (1459) SystemInfo: free sram: 169619 minimal sram: 68092
+I (1459) MCP: Add tool: self.get_device_status
+I (1469) MCP: Add tool: self.audio_speaker.set_volume
+I (1469) MCP: Add tool: self.screen.set_brightness
+I (1479) MCP: Add tool: self.screen.scroll
+I (1479) MCP: Add tool: self.screen.set_theme
+I (1479) MCP: Add tool: self.camera.take_photo
+I (1489) MCP: Add tool: self.get_system_info [user]
+I (1489) MCP: Add tool: self.reboot [user]
+I (1499) MCP: Add tool: self.upgrade_firmware [user]
+I (1499) MCP: Add tool: self.screen.get_info [user]
+I (1509) MCP: Add tool: self.screen.snapshot [user]
+I (1509) MCP: Add tool: self.screen.preview_image [user]
+I (1519) MCP: Add tool: self.assets.set_download_url [user]
+I (1519) WifiManager: Initializing...
+I (1529) pp: pp rom version: e7ae62f
+I (1529) net80211: net80211 rom version: e7ae62f
+I (1539) wifi:wifi driver task: 3fce8620, prio:23, stack:6656, core=0
+I (1539) wifi:wifi firmware version: e12a754
+I (1539) wifi:wifi certification version: v7.0
+I (1549) wifi:config NVS flash: disabled
+I (1549) wifi:config nano formatting: disabled
+I (1549) wifi:Init data frame dynamic rx buffer num: 6
+I (1559) wifi:Init dynamic rx mgmt buffer num: 5
+I (1559) wifi:Init management short buffer num: 32
+I (1569) wifi:Init dynamic tx buffer num: 32
+I (1569) wifi:Init static tx FG buffer num: 2
+I (1579) wifi:Init static rx buffer size: 1600
+I (1579) wifi:Init static rx buffer num: 3
+I (1579) wifi:Init dynamic rx buffer num: 6
+I (1589) wifi_init: rx ba win: 3
+I (1589) wifi_init: accept mbox: 6
+I (1589) wifi_init: tcpip mbox: 16
+I (1599) wifi_init: udp mbox: 6
+I (1599) wifi_init: tcp mbox: 6
+I (1599) wifi_init: tcp tx win: 5760
+I (1609) wifi_init: tcp rx win: 5760
+I (1609) wifi_init: tcp mss: 1440
+I (1609) WifiManager: Initialized
+I (1619) WifiBoard: Starting WiFi connection attempt
+I (1619) WifiManager: Starting station
+I (1619) WifiStation: Station DHCP hostname: Xiaozhi-AE3C
+I (1629) phy_init: phy_version 712,87e8c20e,Apr 13 2026,18:51:10
+I (1669) wifi:mode : sta (7c:0c:5f:54:ae:3c)
+I (1669) wifi:enable tsf
+I (1669) WifiStation: Scanning 2 saved channels
+I (1669) WifiBoard: WiFi scanning
+I (1909) WifiStation: Found AP: Russia 2.4, BSSID: 08:26:97:70:24:cd, RSSI: -27, Channel: 9, Authmode: 3
+I (1909) WifiStation: Found AP: zyxel, BSSID: 6a:26:97:70:24:ce, RSSI: -27, Channel: 9, Authmode: 3
+I (1919) WifiStation: Found AP: Russia 2.4, BSSID: b2:1f:f4:ac:22:14, RSSI: -64, Channel: 1, Authmode: 3
+I (1929) WifiBoard: WiFi connecting to Russia 2.4
+W (1929) wifi:Password length matches WPA2 standards, authmode threshold changes from OPEN to WPA2
+I (2079) wifi:new:<9,0>, old:<1,0>, ap:<255,255>, sta:<9,0>, prof:1, snd_ch_cfg:0x0
+I (2079) wifi:state: init -> auth (0xb0)
+I (3079) wifi:state: auth -> init (0x200)
+I (3079) wifi:state: init -> auth (0xb0)
+I (4079) wifi:state: auth -> init (0x200)
+I (4079) wifi:state: init -> auth (0xb0)
+I (4109) wifi:state: auth -> assoc (0x0)
+I (5109) wifi:state: assoc -> init (0x400)
+I (5119) wifi:state: init -> auth (0xb0)
+I (5119) wifi:state: auth -> assoc (0x0)
+I (6119) wifi:state: assoc -> init (0x400)
+I (6119) WifiStation: WiFi disconnected, reason: 4
+I (6119) WifiStation: Reconnecting Russia 2.4 (attempt 1 / 5)
+I (6179) wifi:new:<1,0>, old:<9,0>, ap:<255,255>, sta:<1,0>, prof:1, snd_ch_cfg:0x0
+I (6179) wifi:state: init -> auth (0xb0)
+I (6189) wifi:state: auth -> assoc (0x0)
+I (6189) wifi:state: assoc -> run (0x10)
+I (6249) wifi:connected with Russia 2.4, aid = 11, channel 1, BW20, bssid = b2:1f:f4:ac:22:14
+I (6249) wifi:security: WPA2-PSK, phy: bgn, rssi: -65, cipher(pairwise:0x3, group:0x3), pmf:0
+I (6249) wifi:pm start, type: 1
+
+I (6259) wifi:dp: 1, bi: 102400, li: 10, scale listen interval from 1024000 us to 1024000 us
+I (6269) wifi:set rx beacon pti, rx_bcn_pti: 0, bcn_timeout: 25000, mt_pti: 0, mt_time: 10000
+I (6329) wifi:<ba-add>idx:0 (ifx:0, b2:1f:f4:ac:22:14), tid:0, ssn:1, winSize:64
+I (6379) wifi:AP's beacon interval = 102400 us, DTIM period = 1
+I (7339) esp_netif_handlers: sta ip: 192.168.0.127, mask: 255.255.255.0, gw: 192.168.0.1
+I (7339) WifiStation: Got IP: 192.168.0.127
+I (7339) WifiBoard: Connected to WiFi: Russia 2.4
+I (7339) Application: Network connected
+I (7339) StateMachine: State: starting -> activating
+I (7349) Assets: The storage free size is 21632 KB
+I (7349) Assets: The assets map size is 1664 KB (partition 8192 KB)
+I (7459) Assets: The checksum calculation time is 95 ms
+I (7459) MODEL_LOADER: Successfully load srmodels
+I (7469) Assets: Refreshing display theme...
+W (7469) EmojiCollection: Emoji not found: robot_2
+I (7469) Ota: Current version: 2.5.0
+I (9359) HttpClient: Established new connection to api.tenclass.net:443 protocol=https cost=1880
+I (10109) HttpClient: HTTP connection closed
+I (10109) Ota: Current is the latest version
+I (10109) Ota: Running partition: ota_0
+I (10119) MQTT: Connecting to endpoint api.tenclass.net:8883
+I (10119) MQTT: Resolved MQTT host api.tenclass.net -> 47.76.65.170
+I (12039) MQTT: Connected to endpoint
+I (12049) Application: Activation done
+I (12049) SystemInfo: free sram: 113495 minimal sram: 39812
+I (12049) StateMachine: State: activating -> idle
+I (12059) WifiStation: Setting WiFi power save level: LOW_POWER (MAX_MODEM)
+I (12059) wifi:Set ps type: 2, coexist: 0
+
+I (12059) LcdDisplay: Chat messages cleared
+I (12069) AfeAudioEngine: Model 0: wn9_nihaoxiaozhi_tts
+I (12069) WakeWordCache: Allocated 64000 bytes in PSRAM
+I (12069) AFE_CONFIG: Set WakeNet Model: wn9_nihaoxiaozhi_tts
+I (12079) AfeAudioEngine: Before AFE create: free=121779 min=39812 largest=69632
+MC Quantized wakenet9: wakenet9l_tts1h8_你好小智_3_0.631_0.635, tigger:v4, mode:0, p:0, (May 25 2026 15:51:00)
+I (12179) AFE: AFE Version: (1MIC_V251128)
+I (12179) AFE: Input PCM Config: total 2 channels(1 microphone, 1 playback), sample rate:16000
+I (12189) AFE: AFE Pipeline: [input] -> |AEC(FD_LOW_COST, NLP_VERY_AGGRESSIVE)| -> |VAD(WebRTC)| -> |WakeNet(wn9_nihaoxiaozhi_tts,)| -> [output]
+I (12199) AFE: AFE Version: (1MIC_V251128)
+I (12209) AFE: Input PCM Config: total 2 channels(1 microphone, 1 playback), sample rate:16000
+I (12209) AFE: AFE Pipeline: [input] -> |VAD(WebRTC)| -> [output]
+I (12219) AfeAudioEngine: Initialized FD AFE, detector: WakeNet, NS: off, feed: 512, fetch: 512
+I (12229) AfeAudioEngine: After AFE create: free=100239 min=33468 largest=57344
+I (12239) I2S_IF: Paired data: 0x3fcd9440, current mode: playback, paired in_enable: 0, paired out_enable: 0
+I (12249) I2S_IF: STD: TX, data_bit: 16, slot_bit: 16, ws_width: 16, slot_mode: MONO, slot_mask: 0x1
+I (12249) I2S_IF: STD: TX, sample_rate_hz: 24000, mclk_multiple: 256, clk_src: 6
+I (12279) Adev_Codec: Open codec device OK
+I (12279) AudioCodec: Set output enable to true
+I (12279) I2S_IF: Peer mode playback need extend bits 32 to 64
+I (12279) AudioService: Resampling audio from 16000 to 24000
+I (12279) I2S_IF: TDM: RX, data_bit: 16, slot_bit: 16, ws_width: 32, total_slot: 4, slot_mask: 0x3
+I (12289) I2S_IF: TDM: RX, sample_rate_hz: 24000, mclk_multiple: 256, clk_src: 6
+I (12299) I2S_IF: STD: TX, data_bit: 16, slot_bit: 32, ws_width: 32, slot_mode: MONO, slot_mask: 0x1
+I (12309) I2S_IF: STD: TX, sample_rate_hz: 24000, mclk_multiple: 256, clk_src: 6
+I (12319) ES7210: Bits 16
+I (12329) ES7210: Enable ES7210_INPUT_MIC1
+I (12329) ES7210: Enable ES7210_INPUT_MIC2
+I (12329) ES7210: Enable ES7210_INPUT_MIC3
+I (12339) ES7210: Enable ES7210_INPUT_MIC4
+I (12339) ES7210: Enable TDM mode
+I (12339) ES7210: Unmuted
+I (12339) Adev_Codec: Open codec device OK
+I (12349) AudioCodec: Set input enable to true

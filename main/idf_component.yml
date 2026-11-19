@@ -162,3 +162,10 @@ dependencies:
   m5stack/m5pm1: ^1.0.7
 
   cube32esp/xpowerslib: ^0.3.3
+
+  # USB Mass Storage Class (MSC) device stack for exposing the microSD card
+  # to a host PC over USB OTG. Required by the MAX35 board's USB MSC feature.
+  espressif/esp_tinyusb:
+    version: ^2.0.1~1
+    rules:
+    - if: target in [esp32s3]

@@ -1,0 +1,329 @@
+build_full.txt:37:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/config.h:348:5: error: 'struct slideshow::Config::PlaylistConfig' redeclared with different access
+build_full.txt:41:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/config.cc:633:44: error: exception handling disabled, use '-fexceptions' to enable
+build_full.txt:51:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:69:63: error: definition of 'void SlideshowMCP::Log(const char*, const char*, ...)' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:55:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:72:29: error: 'TAG' was not declared in this scope; did you mean 'slideshow::TAG'?
+build_full.txt:62:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:72:5: error: 'esp_log_logger_v' was not declared in this scope; did you mean 'esp_log_level_t'?
+build_full.txt:67:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:124:40: error: definition of 'bool SlideshowMCP::EnsureSdCardMounted()' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:71:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:131:20: error: variable 'SlideshowMCP::EnsureSdCardMounted()::statvfs vfs' has initializer but incomplete type
+build_full.txt:74:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:132:43: error: invalid use of incomplete type 'struct SlideshowMCP::EnsureSdCardMounted()::statvfs'
+build_full.txt:80:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:137:5: error: 'sdmmc_card_t' was not declared in this scope
+build_full.txt:83:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:137:19: error: 'card' was not declared in this scope
+build_full.txt:86:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:138:5: error: 'sdmmc_host_t' was not declared in this scope
+build_full.txt:89:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:139:5: error: 'host' was not declared in this scope
+build_full.txt:92:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:139:25: error: 'SDMMC_FREQ_DEFAULT' was not declared in this scope; did you mean 'SDM_CLK_SRC_DEFAULT'?
+build_full.txt:96:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:141:5: error: 'sdmmc_slot_config_t' was not declared in this scope; did you mean 'esp_log_config_t'?
+build_full.txt:100:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:142:5: error: 'slot' was not declared in this scope
+build_full.txt:103:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:142:19: error: 'SDMMC_SLOT_FLAG_INTERNAL_PULLUP' was not declared in this scope
+build_full.txt:106:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:144:5: error: 'esp_vfs_fat_mount_config_t' was not declared in this scope
+build_full.txt:109:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:145:5: error: 'mount_config' was not declared in this scope
+build_full.txt:112:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:149:9: error: 'esp_vfs_fat_sdmmc_mount' was not declared in this scope
+build_full.txt:117:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:151:18: error: 'TAG' was not declared in this scope; did you mean 'slideshow::TAG'?
+build_full.txt:132:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:151:18: error: 'TAG' was not declared in this scope; did you mean 'slideshow::TAG'?
+build_full.txt:147:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:151:18: error: 'TAG' was not declared in this scope; did you mean 'slideshow::TAG'?
+build_full.txt:162:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:151:18: error: 'TAG' was not declared in this scope; did you mean 'slideshow::TAG'?
+build_full.txt:177:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:151:18: error: 'TAG' was not declared in this scope; did you mean 'slideshow::TAG'?
+build_full.txt:192:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:155:5: error: 'sdmmc_card_print_info' was not declared in this scope
+build_full.txt:196:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:238:59: error: definition of 'bool SlideshowMCP::IsSafeMediaPath(const std::string&)' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:199:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:243:31: error: definition of 'void SlideshowMCP::ScanImages()' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:203:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:251:37: error: invalid use of incomplete type 'class Config'
+build_full.txt:210:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:252:47: error: 'SD_CARD_MOUNT_POINT' was not declared in this scope
+build_full.txt:213:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:291:33: error: invalid use of incomplete type 'class Config'
+build_full.txt:219:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:295:59: error: invalid use of incomplete type 'class Config'
+build_full.txt:225:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:295:24: error: 'HasExtension' was not declared in this scope; did you mean 'slideshow::{anonymous}::HasExtension'?
+build_full.txt:232:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:306:5: error: 'NaturalComparator' was not declared in this scope; did you mean 'slideshow::{anonymous}::NaturalComparator'?
+build_full.txt:239:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:308:68: error: definition of 'auto SlideshowMCP::ScanImages()::<lambda>::operator()(const std::string&, const std::string&) const' is not in namespace enclosing 'SlideshowMCP::ScanImages()::<lambda>' [-fpermissive]
+build_full.txt:243:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:309:33: error: 'comparator' was not declared in this scope
+build_full.txt:247:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:312:16: error: invalid use of incomplete type 'class Config'
+build_full.txt:261:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:318:54: error: invalid use of incomplete type 'class Config'
+build_full.txt:267:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:319:34: error: invalid use of incomplete type 'class Config'
+build_full.txt:274:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:332:40: error: definition of 'void SlideshowMCP::EngineTask(void*)' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:278:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:335:23: error: 'TAG' was not declared in this scope; did you mean 'slideshow::TAG'?
+build_full.txt:286:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:342:30: error: definition of 'void SlideshowMCP::EngineRun()' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:290:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:344:26: error: 'kDefaultStepMs' was not declared in this scope; did you mean 'slideshow::kDefaultStepMs'?
+build_full.txt:297:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:357:24: error: invalid use of incomplete type 'struct QueueDefinition'
+build_full.txt:306:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:358:22: error: 'kEventStop' was not declared in this scope
+build_full.txt:309:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:361:22: error: 'kEventPause' was not declared in this scope
+build_full.txt:312:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:362:33: error: invalid use of incomplete type 'struct QueueDefinition'
+build_full.txt:318:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:364:22: error: 'kEventNext' was not declared in this scope
+build_full.txt:321:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:368:22: error: 'kEventPrev' was not declared in this scope
+build_full.txt:324:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:374:22: error: 'kEventStart' was not declared in this scope
+build_full.txt:327:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:377:22: error: 'kEventReloadConfig' was not declared in this scope; did you mean 'ToolReloadConfig'?
+build_full.txt:331:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:378:21: error: invalid use of incomplete type 'class Config'
+build_full.txt:337:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:402:31: error: invalid use of incomplete type 'class Config'
+build_full.txt:343:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:434:17: error: invalid use of incomplete type 'class Display'
+build_full.txt:353:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:439:62: error: definition of 'void SlideshowMCP::EnqueueEvent(int, int32_t)' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:356:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:462:39: error: definition of 'void SlideshowMCP::ShowSlide(int)' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:360:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:473:13: error: aggregate 'Decoder decoder' has incomplete type and cannot be defined
+build_full.txt:363:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:474:5: error: 'Rgb565Frame' was not declared in this scope
+build_full.txt:366:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:479:10: error: 'frame' was not declared in this scope
+build_full.txt:369:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:490:9: error: invalid use of incomplete type 'const class Config'
+build_full.txt:375:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:492:17: error: invalid use of incomplete type 'class Display'
+build_full.txt:381:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:492:34: error: 'frame' was not declared in this scope
+build_full.txt:384:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:494:34: error: invalid use of incomplete type 'const class Config'
+build_full.txt:390:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:498:13: error: 'prev_frame_' was not declared in this scope
+build_full.txt:393:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:498:55: error: 'frame' was not declared in this scope
+build_full.txt:396:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:502:28: error: 'class std::unique_ptr<TransitionEngine>' has no member named 'StartTransition'
+build_full.txt:399:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:502:44: error: 'prev_frame_' was not declared in this scope
+build_full.txt:402:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:502:57: error: 'frame' was not declared in this scope
+build_full.txt:405:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:506:52: error: invalid use of incomplete type 'const class Config'
+build_full.txt:411:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:507:43: error: 'kDefaultStepMs' was not declared in this scope; did you mean 'slideshow::kDefaultStepMs'?
+build_full.txt:418:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:511:32: error: 'class std::unique_ptr<TransitionEngine>' has no member named 'Step'
+build_full.txt:421:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:512:21: error: invalid use of incomplete type 'class Display'
+build_full.txt:427:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:513:70: error: invalid use of incomplete type 'const class Config'
+build_full.txt:433:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:514:37: error: 'class std::unique_ptr<TransitionEngine>' has no member named 'IsActive'
+build_full.txt:436:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:522:5: error: 'frame_start_ms_' was not declared in this scope
+build_full.txt:440:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:525:41: error: definition of 'bool SlideshowMCP::PreloadNext(int)' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:444:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:526:17: error: invalid use of incomplete type 'class Config'
+build_full.txt:450:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:530:13: error: aggregate 'Decoder decoder' has incomplete type and cannot be defined
+build_full.txt:453:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:532:5: error: 'Rgb565Frame' was not declared in this scope
+build_full.txt:456:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:536:10: error: 'frame' was not declared in this scope
+build_full.txt:460:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:547:39: error: definition of 'void SlideshowMCP::SaveResumePosition()' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:464:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:548:12: error: invalid use of incomplete type 'class Config'
+build_full.txt:470:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:548:57: error: invalid use of incomplete type 'class Config'
+build_full.txt:477:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:551:80: error: definition of 'void SlideshowMCP::LoadResumePosition(int&, std::string&)' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:481:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:552:12: error: invalid use of incomplete type 'class Config'
+build_full.txt:488:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:573:51: error: no match for 'operator==' (operand types are 'size_t' {aka 'unsigned int'} and 'std::string' {aka 'std::__cxx11::basic_string<char>'})
+build_full.txt:639:C:/Espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/xtensa-esp-elf/include/c++/15.2.0/system_error:467:3: note: candidate 17: 'bool std::operator==(const error_code&, const error_condition&)' (reversed)
+build_full.txt:642:C:/Espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/xtensa-esp-elf/include/c++/15.2.0/system_error:467:32: note: no known conversion for argument 1 from 'std::string' {aka 'std::__cxx11::basic_string<char>'} to 'const std::error_code&'
+build_full.txt:760:C:/Espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/xtensa-esp-elf/include/c++/15.2.0/system_error:451:3: note: candidate 33: 'bool std::operator==(const error_code&, const error_code&)'
+build_full.txt:763:C:/Espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/xtensa-esp-elf/include/c++/15.2.0/system_error:451:32: note: no known conversion for argument 1 from 'size_t' {aka 'unsigned int'} to 'const std::error_code&'
+build_full.txt:766:C:/Espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/xtensa-esp-elf/include/c++/15.2.0/system_error:482:3: note: candidate 34: 'bool std::operator==(const error_condition&, const error_condition&)'
+build_full.txt:769:C:/Espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/xtensa-esp-elf/include/c++/15.2.0/system_error:482:37: note: no known conversion for argument 1 from 'size_t' {aka 'unsigned int'} to 'const std::error_condition&'
+build_full.txt:784:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:582:54: error: definition of 'cJSON* SlideshowMCP::ToolListImages(const cJSON*)' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:788:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:583:22: error: 'GetInstance' was not declared in this scope; did you mean 'instance'?
+build_full.txt:792:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:591:28: error: 'GetBool' was not declared in this scope; did you mean 'slideshow::{anonymous}::GetBool'?
+build_full.txt:799:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:596:52: error: 'SD_CARD_MOUNT_POINT' was not declared in this scope
+build_full.txt:802:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:596:18: error: 'ImageListToJson' was not declared in this scope; did you mean 'slideshow::{anonymous}::ImageListToJson'?
+build_full.txt:809:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:599:16: error: 'CreateError' was not declared in this scope
+build_full.txt:819:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:610:53: error: definition of 'cJSON* SlideshowMCP::ToolShowImage(const cJSON*)' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:823:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:611:22: error: 'GetInstance' was not declared in this scope; did you mean 'instance'?
+build_full.txt:827:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:612:23: error: 'GetStr' was not declared in this scope; did you mean 'slideshow::{anonymous}::GetStr'?
+build_full.txt:834:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:614:16: error: 'CreateError' was not declared in this scope
+build_full.txt:837:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:617:16: error: 'CreateError' was not declared in this scope
+build_full.txt:840:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:621:13: error: aggregate 'Decoder decoder' has incomplete type and cannot be defined
+build_full.txt:843:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:622:47: error: 'SD_CARD_MOUNT_POINT' was not declared in this scope
+build_full.txt:846:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:623:5: error: 'Rgb565Frame' was not declared in this scope
+build_full.txt:849:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:627:10: error: 'frame' was not declared in this scope
+build_full.txt:852:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:628:16: error: 'CreateError' was not declared in this scope
+build_full.txt:855:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:634:32: error: 'ParseTransition' was not declared in this scope; did you mean 'ToolSetTransition'?
+build_full.txt:859:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:641:39: error: 'frame' was not declared in this scope
+build_full.txt:862:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:645:12: error: 'CreateResult' was not declared in this scope
+build_full.txt:866:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:649:49: error: definition of 'cJSON* SlideshowMCP::ToolStart(const cJSON*)' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:870:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:650:22: error: 'GetInstance' was not declared in this scope; did you mean 'instance'?
+build_full.txt:874:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:653:27: error: 'GetStr' was not declared in this scope; did you mean 'slideshow::{anonymous}::GetStr'?
+build_full.txt:881:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:659:50: error: 'ParseTransition' was not declared in this scope; did you mean 'ToolSetTransition'?
+build_full.txt:885:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:661:22: error: 'GetNum' was not declared in this scope; did you mean 'slideshow::{anonymous}::GetNum'?
+build_full.txt:892:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:666:27: error: 'kEventStart' was not declared in this scope
+build_full.txt:895:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:668:12: error: 'CreateResult' was not declared in this scope
+build_full.txt:899:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:672:48: error: definition of 'cJSON* SlideshowMCP::ToolStop(const cJSON*)' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:903:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:674:22: error: 'GetInstance' was not declared in this scope; did you mean 'instance'?
+build_full.txt:907:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:675:27: error: 'kEventStop' was not declared in this scope
+build_full.txt:910:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:677:12: error: 'CreateResult' was not declared in this scope
+build_full.txt:914:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:681:49: error: definition of 'cJSON* SlideshowMCP::ToolPause(const cJSON*)' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:918:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:682:22: error: 'GetInstance' was not declared in this scope; did you mean 'instance'?
+build_full.txt:922:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:683:24: error: 'GetBool' was not declared in this scope; did you mean 'slideshow::{anonymous}::GetBool'?
+build_full.txt:929:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:684:27: error: 'kEventPause' was not declared in this scope
+build_full.txt:932:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:685:12: error: 'CreateResult' was not declared in this scope
+build_full.txt:936:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:689:48: error: definition of 'cJSON* SlideshowMCP::ToolNext(const cJSON*)' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:940:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:691:22: error: 'GetInstance' was not declared in this scope; did you mean 'instance'?
+build_full.txt:944:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:692:27: error: 'kEventNext' was not declared in this scope
+build_full.txt:947:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:693:12: error: 'CreateResult' was not declared in this scope
+build_full.txt:951:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:697:48: error: definition of 'cJSON* SlideshowMCP::ToolPrev(const cJSON*)' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:955:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:699:22: error: 'GetInstance' was not declared in this scope; did you mean 'instance'?
+build_full.txt:959:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:700:27: error: 'kEventPrev' was not declared in this scope
+build_full.txt:962:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:701:12: error: 'CreateResult' was not declared in this scope
+build_full.txt:966:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:705:60: error: definition of 'cJSON* SlideshowMCP::ToolSetSlideDuration(const cJSON*)' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:970:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:706:22: error: 'GetInstance' was not declared in this scope; did you mean 'instance'?
+build_full.txt:974:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:707:22: error: 'GetNum' was not declared in this scope; did you mean 'slideshow::{anonymous}::GetNum'?
+build_full.txt:981:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:709:16: error: 'CreateError' was not declared in this scope
+build_full.txt:984:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:712:12: error: 'CreateResult' was not declared in this scope
+build_full.txt:988:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:716:57: error: definition of 'cJSON* SlideshowMCP::ToolSetTransition(const cJSON*)' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:992:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:717:22: error: 'GetInstance' was not declared in this scope; did you mean 'instance'?
+build_full.txt:996:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:718:28: error: 'GetStr' was not declared in this scope; did you mean 'slideshow::{anonymous}::GetStr'?
+build_full.txt:1003:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:720:16: error: 'CreateError' was not declared in this scope
+build_full.txt:1006:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:722:28: error: 'ParseTransition' was not declared in this scope; did you mean 'ToolSetTransition'?
+build_full.txt:1010:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:725:60: error: 'TransitionToString' was not declared in this scope; did you mean 'TransitionEngine'?
+build_full.txt:1014:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:725:12: error: 'CreateResult' was not declared in this scope
+build_full.txt:1018:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:729:55: error: definition of 'cJSON* SlideshowMCP::ToolSetPlaylist(const cJSON*)' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:1022:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:730:22: error: 'GetInstance' was not declared in this scope; did you mean 'instance'?
+build_full.txt:1026:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:731:27: error: 'GetStr' was not declared in this scope; did you mean 'slideshow::{anonymous}::GetStr'?
+build_full.txt:1033:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:733:16: error: 'CreateError' was not declared in this scope
+build_full.txt:1036:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:736:16: error: 'CreateError' was not declared in this scope
+build_full.txt:1039:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:739:27: error: 'kEventStart' was not declared in this scope
+build_full.txt:1042:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:740:12: error: 'CreateResult' was not declared in this scope
+build_full.txt:1046:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:744:50: error: definition of 'cJSON* SlideshowMCP::ToolStatus(const cJSON*)' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:1050:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:746:22: error: 'GetInstance' was not declared in this scope; did you mean 'instance'?
+build_full.txt:1054:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:765:29: error: 'TransitionToString' was not declared in this scope; did you mean 'TransitionEngine'?
+build_full.txt:1059:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:772:53: error: definition of 'cJSON* SlideshowMCP::ToolImageList(const cJSON*)' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:1063:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:774:22: error: 'GetInstance' was not declared in this scope; did you mean 'instance'?
+build_full.txt:1067:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:775:52: error: 'SD_CARD_MOUNT_POINT' was not declared in this scope
+build_full.txt:1070:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:775:18: error: 'ImageListToJson' was not declared in this scope; did you mean 'slideshow::{anonymous}::ImageListToJson'?
+build_full.txt:1077:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:777:32: error: 'CreateError' was not declared in this scope
+build_full.txt:1081:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:786:50: error: definition of 'cJSON* SlideshowMCP::ToolConfig(const cJSON*)' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:1085:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:788:22: error: 'GetInstance' was not declared in this scope; did you mean 'instance'?
+build_full.txt:1089:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:791:29: error: 'CreateError' was not declared in this scope
+build_full.txt:1093:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:795:56: error: definition of 'cJSON* SlideshowMCP::ToolReloadConfig(const cJSON*)' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:1097:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:797:22: error: 'GetInstance' was not declared in this scope; did you mean 'instance'?
+build_full.txt:1101:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:799:12: error: 'CreateResult' was not declared in this scope
+build_full.txt:1105:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:803:49: error: definition of 'cJSON* SlideshowMCP::ToolStats(const cJSON*)' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:1109:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:805:22: error: 'GetInstance' was not declared in this scope; did you mean 'instance'?
+build_full.txt:1114:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:822:55: error: definition of 'cJSON* SlideshowMCP::ToolTestPattern(const cJSON*)' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:1118:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:824:22: error: 'GetInstance' was not declared in this scope; did you mean 'instance'?
+build_full.txt:1122:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:828:16: error: 'CreateError' was not declared in this scope
+build_full.txt:1125:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:858:12: error: 'CreateResult' was not declared in this scope
+build_full.txt:1129:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:862:53: error: definition of 'cJSON* SlideshowMCP::ToolBenchmark(const cJSON*)' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:1133:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:863:22: error: 'GetInstance' was not declared in this scope; did you mean 'instance'?
+build_full.txt:1137:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:864:23: error: 'GetStr' was not declared in this scope; did you mean 'slideshow::{anonymous}::GetStr'?
+build_full.txt:1144:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:866:16: error: 'CreateError' was not declared in this scope
+build_full.txt:1147:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:869:16: error: 'CreateError' was not declared in this scope
+build_full.txt:1150:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:872:13: error: aggregate 'Decoder decoder' has incomplete type and cannot be defined
+build_full.txt:1153:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:873:47: error: 'SD_CARD_MOUNT_POINT' was not declared in this scope
+build_full.txt:1156:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:877:29: error: definition of 'auto SlideshowMCP::ToolBenchmark(const cJSON*)::<lambda>::operator()(void*) const' is not in namespace enclosing 'SlideshowMCP::ToolBenchmark(const cJSON*)::<lambda>' [-fpermissive]
+build_full.txt:1159:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:881:5: error: 'Rgb565Frame' was not declared in this scope
+build_full.txt:1162:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:886:10: error: 'frame' was not declared in this scope
+build_full.txt:1165:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:887:16: error: 'CreateError' was not declared in this scope
+build_full.txt:1168:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:893:20: error: expected ';' before 'f'
+build_full.txt:1172:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:898:62: error: too many arguments to function 'int64_t esp_timer_get_time()'
+build_full.txt:1179:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:899:14: error: 'f' was not declared in this scope
+build_full.txt:1182:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:900:20: error: 'CreateError' was not declared in this scope
+build_full.txt:1185:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:907:29: error: 'frame' was not declared in this scope
+build_full.txt:1189:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:920:50: error: definition of 'cJSON* SlideshowMCP::ToolResume(const cJSON*)' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:1193:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:922:22: error: 'GetInstance' was not declared in this scope; did you mean 'instance'?
+build_full.txt:1197:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:927:27: error: 'kEventStart' was not declared in this scope
+build_full.txt:1200:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:928:12: error: 'CreateResult' was not declared in this scope
+build_full.txt:1204:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:932:54: error: definition of 'cJSON* SlideshowMCP::ToolDeleteFile(const cJSON*)' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:1208:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:933:22: error: 'GetInstance' was not declared in this scope; did you mean 'instance'?
+build_full.txt:1212:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:934:23: error: 'GetStr' was not declared in this scope; did you mean 'slideshow::{anonymous}::GetStr'?
+build_full.txt:1219:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:936:16: error: 'CreateError' was not declared in this scope
+build_full.txt:1222:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:939:16: error: 'CreateError' was not declared in this scope
+build_full.txt:1225:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:942:47: error: 'SD_CARD_MOUNT_POINT' was not declared in this scope
+build_full.txt:1228:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:944:16: error: 'CreateError' was not declared in this scope
+build_full.txt:1231:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:946:27: error: 'kEventStart' was not declared in this scope
+build_full.txt:1234:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:947:12: error: 'CreateResult' was not declared in this scope
+build_full.txt:1238:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:954:29: error: definition of 'SlideshowMCP::instance_' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:1241:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:954:15: error: 'SlideshowMCP* SlideshowMCP::instance_' is not a static data member of 'class SlideshowMCP'
+build_full.txt:1244:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:956:76: error: definition of 'SlideshowMCP::SlideshowMCP(Display*, const std::string&)' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:1248:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:958:5: error: 'instance_' was not declared in this scope
+build_full.txt:1251:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:960:12: error: invalid use of incomplete type 'class Config'
+build_full.txt:1257:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:961:12: error: invalid use of incomplete type 'class Config'
+build_full.txt:1263:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:964:16: error: invalid use of incomplete type 'class Config'
+build_full.txt:1269:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:964:39: error: invalid use of incomplete type 'class Config'
+build_full.txt:1275:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:965:16: error: invalid use of incomplete type 'class Config'
+build_full.txt:1281:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:965:38: error: invalid use of incomplete type 'class Config'
+build_full.txt:1287:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:966:12: error: invalid use of incomplete type 'class Config'
+build_full.txt:1293:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:966:24: error: 'kDefaultStepMs' was not declared in this scope; did you mean 'slideshow::kDefaultStepMs'?
+build_full.txt:1300:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:983:16: error: invalid use of incomplete type 'class Config'
+build_full.txt:1306:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:984:16: error: invalid use of incomplete type 'class Config'
+build_full.txt:1316:C:/Espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/xtensa-esp-elf/include/c++/15.2.0/bits/unique_ptr.h:1085:30: error: invalid use of incomplete type 'class Config'
+build_full.txt:1323:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:991:29: error: definition of 'SlideshowMCP::~SlideshowMCP()' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:1327:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1001:5: error: 'instance_' was not declared in this scope
+build_full.txt:1331:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1004:31: error: definition of 'bool SlideshowMCP::Initialize()' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:1335:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1009:53: error: 'kEngineTaskStackSize' was not declared in this scope; did you mean 'slideshow::kEngineTaskStackSize'?
+build_full.txt:1343:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1018:55: error: definition of 'void SlideshowMCP::RegisterTools(McpServer*)' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:1347:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1025:15: error: invalid use of incomplete type 'class McpServer'
+build_full.txt:1353:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1028:61: error: 'kPropertyTypeBoolean' was not declared in this scope
+build_full.txt:1356:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1028:39: error: 'Property' was not declared in this scope
+build_full.txt:1359:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1029:56: error: 'kPropertyTypeString' was not declared in this scope
+build_full.txt:1362:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1028:25: error: 'PropertyList' was not declared in this scope
+build_full.txt:1365:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1031:34: error: 'PropertyList' does not name a type
+build_full.txt:1368:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1049:26: error: definition of 'auto SlideshowMCP::RegisterTools(McpServer*)::<lambda>::operator()(int) const' is not in namespace enclosing 'SlideshowMCP::RegisterTools(McpServer*)::<lambda>' [-fpermissive]
+build_full.txt:1372:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1049:27: error: expected '{' before ';' token
+build_full.txt:1376:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1049:27: error: expected ')' before ';' token
+build_full.txt:1383:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1051:15: error: invalid use of incomplete type 'class McpServer'
+build_full.txt:1389:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1056:34: error: 'PropertyList' does not name a type
+build_full.txt:1392:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1070:26: error: definition of 'auto SlideshowMCP::RegisterTools(McpServer*)::<lambda>::operator()(int) const' is not in namespace enclosing 'SlideshowMCP::RegisterTools(McpServer*)::<lambda>' [-fpermissive]
+build_full.txt:1396:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1070:27: error: expected '{' before ';' token
+build_full.txt:1400:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1070:27: error: expected ')' before ';' token
+build_full.txt:1407:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1072:15: error: invalid use of incomplete type 'class McpServer'
+build_full.txt:1413:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1077:66: error: 'kPropertyTypeFloat' was not declared in this scope
+build_full.txt:1416:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1078:34: error: 'PropertyList' does not name a type
+build_full.txt:1419:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1096:26: error: definition of 'auto SlideshowMCP::RegisterTools(McpServer*)::<lambda>::operator()(int) const' is not in namespace enclosing 'SlideshowMCP::RegisterTools(McpServer*)::<lambda>' [-fpermissive]
+build_full.txt:1423:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1096:27: error: expected '{' before ';' token
+build_full.txt:1427:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1096:27: error: expected ')' before ';' token
+build_full.txt:1434:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1098:15: error: invalid use of incomplete type 'class McpServer'
+build_full.txt:1440:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1100:34: error: 'PropertyList' does not name a type
+build_full.txt:1443:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1102:26: error: definition of 'auto SlideshowMCP::RegisterTools(McpServer*)::<lambda>::operator()(int) const' is not in namespace enclosing 'SlideshowMCP::RegisterTools(McpServer*)::<lambda>' [-fpermissive]
+build_full.txt:1447:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1102:27: error: expected '{' before ';' token
+build_full.txt:1451:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1102:27: error: expected ')' before ';' token
+build_full.txt:1458:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1104:15: error: invalid use of incomplete type 'class McpServer'
+build_full.txt:1464:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1107:34: error: 'PropertyList' does not name a type
+build_full.txt:1467:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1115:26: error: definition of 'auto SlideshowMCP::RegisterTools(McpServer*)::<lambda>::operator()(int) const' is not in namespace enclosing 'SlideshowMCP::RegisterTools(McpServer*)::<lambda>' [-fpermissive]
+build_full.txt:1471:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1115:27: error: expected '{' before ';' token
+build_full.txt:1475:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1115:27: error: expected ')' before ';' token
+build_full.txt:1482:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1117:15: error: invalid use of incomplete type 'class McpServer'
+build_full.txt:1488:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1119:34: error: 'PropertyList' does not name a type
+build_full.txt:1491:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1121:26: error: definition of 'auto SlideshowMCP::RegisterTools(McpServer*)::<lambda>::operator()(int) const' is not in namespace enclosing 'SlideshowMCP::RegisterTools(McpServer*)::<lambda>' [-fpermissive]
+build_full.txt:1495:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1121:27: error: expected '{' before ';' token
+build_full.txt:1499:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1121:27: error: expected ')' before ';' token
+build_full.txt:1506:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1123:15: error: invalid use of incomplete type 'class McpServer'
+build_full.txt:1512:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1125:34: error: 'PropertyList' does not name a type
+build_full.txt:1515:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1127:26: error: definition of 'auto SlideshowMCP::RegisterTools(McpServer*)::<lambda>::operator()(int) const' is not in namespace enclosing 'SlideshowMCP::RegisterTools(McpServer*)::<lambda>' [-fpermissive]
+build_full.txt:1519:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1127:27: error: expected '{' before ';' token
+build_full.txt:1523:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1127:27: error: expected ')' before ';' token
+build_full.txt:1530:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1129:15: error: invalid use of incomplete type 'class McpServer'
+build_full.txt:1536:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1132:34: error: 'PropertyList' does not name a type
+build_full.txt:1539:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1140:26: error: definition of 'auto SlideshowMCP::RegisterTools(McpServer*)::<lambda>::operator()(int) const' is not in namespace enclosing 'SlideshowMCP::RegisterTools(McpServer*)::<lambda>' [-fpermissive]
+build_full.txt:1543:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1140:27: error: expected '{' before ';' token
+build_full.txt:1547:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1140:27: error: expected ')' before ';' token
+build_full.txt:1554:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1142:15: error: invalid use of incomplete type 'class McpServer'
+build_full.txt:1560:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1145:34: error: 'PropertyList' does not name a type
+build_full.txt:1563:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1153:26: error: definition of 'auto SlideshowMCP::RegisterTools(McpServer*)::<lambda>::operator()(int) const' is not in namespace enclosing 'SlideshowMCP::RegisterTools(McpServer*)::<lambda>' [-fpermissive]
+build_full.txt:1567:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1153:27: error: expected '{' before ';' token
+build_full.txt:1571:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1153:27: error: expected ')' before ';' token
+build_full.txt:1578:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1155:15: error: invalid use of incomplete type 'class McpServer'
+build_full.txt:1584:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1157:34: error: 'PropertyList' does not name a type
+build_full.txt:1587:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1165:26: error: definition of 'auto SlideshowMCP::RegisterTools(McpServer*)::<lambda>::operator()(int) const' is not in namespace enclosing 'SlideshowMCP::RegisterTools(McpServer*)::<lambda>' [-fpermissive]
+build_full.txt:1591:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1165:27: error: expected '{' before ';' token
+build_full.txt:1595:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1165:27: error: expected ')' before ';' token
+build_full.txt:1602:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1167:15: error: invalid use of incomplete type 'class McpServer'
+build_full.txt:1608:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1169:50: error: 'PropertyList' does not name a type
+build_full.txt:1611:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1171:26: error: definition of 'auto SlideshowMCP::RegisterTools(McpServer*)::<lambda>::operator()(int) const' is not in namespace enclosing 'SlideshowMCP::RegisterTools(McpServer*)::<lambda>' [-fpermissive]
+build_full.txt:1615:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1171:27: error: expected '{' before ';' token
+build_full.txt:1619:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1171:27: error: expected ')' before ';' token
+build_full.txt:1626:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1173:15: error: invalid use of incomplete type 'class McpServer'
+build_full.txt:1632:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1175:34: error: 'PropertyList' does not name a type
+build_full.txt:1635:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1177:26: error: definition of 'auto SlideshowMCP::RegisterTools(McpServer*)::<lambda>::operator()(int) const' is not in namespace enclosing 'SlideshowMCP::RegisterTools(McpServer*)::<lambda>' [-fpermissive]
+build_full.txt:1639:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1177:27: error: expected '{' before ';' token
+build_full.txt:1643:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1177:27: error: expected ')' before ';' token
+build_full.txt:1650:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1179:15: error: invalid use of incomplete type 'class McpServer'
+build_full.txt:1656:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1181:34: error: 'PropertyList' does not name a type
+build_full.txt:1659:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1183:26: error: definition of 'auto SlideshowMCP::RegisterTools(McpServer*)::<lambda>::operator()(int) const' is not in namespace enclosing 'SlideshowMCP::RegisterTools(McpServer*)::<lambda>' [-fpermissive]
+build_full.txt:1663:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1183:27: error: expected '{' before ';' token
+build_full.txt:1667:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1183:27: error: expected ')' before ';' token
+build_full.txt:1674:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1185:15: error: invalid use of incomplete type 'class McpServer'
+build_full.txt:1680:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1187:34: error: 'PropertyList' does not name a type
+build_full.txt:1683:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1189:26: error: definition of 'auto SlideshowMCP::RegisterTools(McpServer*)::<lambda>::operator()(int) const' is not in namespace enclosing 'SlideshowMCP::RegisterTools(McpServer*)::<lambda>' [-fpermissive]
+build_full.txt:1687:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1189:27: error: expected '{' before ';' token
+build_full.txt:1691:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1189:27: error: expected ')' before ';' token
+build_full.txt:1698:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1191:15: error: invalid use of incomplete type 'class McpServer'
+build_full.txt:1704:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1193:50: error: 'PropertyList' does not name a type
+build_full.txt:1707:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1195:26: error: definition of 'auto SlideshowMCP::RegisterTools(McpServer*)::<lambda>::operator()(int) const' is not in namespace enclosing 'SlideshowMCP::RegisterTools(McpServer*)::<lambda>' [-fpermissive]
+build_full.txt:1711:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1195:27: error: expected '{' before ';' token
+build_full.txt:1715:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1195:27: error: expected ')' before ';' token
+build_full.txt:1722:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1197:15: error: invalid use of incomplete type 'class McpServer'
+build_full.txt:1728:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1199:34: error: 'PropertyList' does not name a type
+build_full.txt:1731:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1201:26: error: definition of 'auto SlideshowMCP::RegisterTools(McpServer*)::<lambda>::operator()(int) const' is not in namespace enclosing 'SlideshowMCP::RegisterTools(McpServer*)::<lambda>' [-fpermissive]
+build_full.txt:1735:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1201:27: error: expected '{' before ';' token
+build_full.txt:1739:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1201:27: error: expected ')' before ';' token
+build_full.txt:1746:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1203:15: error: invalid use of incomplete type 'class McpServer'
+build_full.txt:1752:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1206:34: error: 'PropertyList' does not name a type
+build_full.txt:1755:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1216:26: error: definition of 'auto SlideshowMCP::RegisterTools(McpServer*)::<lambda>::operator()(int) const' is not in namespace enclosing 'SlideshowMCP::RegisterTools(McpServer*)::<lambda>' [-fpermissive]
+build_full.txt:1759:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1216:27: error: expected '{' before ';' token
+build_full.txt:1763:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1216:27: error: expected ')' before ';' token
+build_full.txt:1770:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1218:15: error: invalid use of incomplete type 'class McpServer'
+build_full.txt:1776:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1220:34: error: 'PropertyList' does not name a type
+build_full.txt:1779:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1222:26: error: definition of 'auto SlideshowMCP::RegisterTools(McpServer*)::<lambda>::operator()(int) const' is not in namespace enclosing 'SlideshowMCP::RegisterTools(McpServer*)::<lambda>' [-fpermissive]
+build_full.txt:1783:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1222:27: error: expected '{' before ';' token
+build_full.txt:1787:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1222:27: error: expected ')' before ';' token
+build_full.txt:1794:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1224:15: error: invalid use of incomplete type 'class McpServer'
+build_full.txt:1800:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1227:34: error: 'PropertyList' does not name a type
+build_full.txt:1803:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1237:26: error: definition of 'auto SlideshowMCP::RegisterTools(McpServer*)::<lambda>::operator()(int) const' is not in namespace enclosing 'SlideshowMCP::RegisterTools(McpServer*)::<lambda>' [-fpermissive]
+build_full.txt:1807:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1237:27: error: expected '{' before ';' token
+build_full.txt:1811:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1237:27: error: expected ')' before ';' token
+build_full.txt:1819:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1242:58: error: definition of 'SlideshowMCP& SlideshowMCP::GetInstance(const cJSON*)' is not in namespace enclosing 'SlideshowMCP' [-fpermissive]
+build_full.txt:1822:C:/dev/workspaces/esp32/xiaozhi-esp32/main/sdcard_slideshow/sdcard_slideshow.cc:1242:15: error: no declaration matches 'SlideshowMCP& SlideshowMCP::GetInstance(const cJSON*)'
+build_full.txt:1836:C:/Espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/xtensa-esp-elf/include/c++/15.2.0/bits/unique_ptr.h:91:23: error: invalid application of 'sizeof' to incomplete type 'Config'
+build_full.txt:1846:C:/Espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/xtensa-esp-elf/include/c++/15.2.0/bits/unique_ptr.h:91:23: error: invalid application of 'sizeof' to incomplete type 'Decoder'
+build_full.txt:1856:C:/Espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/xtensa-esp-elf/include/c++/15.2.0/bits/unique_ptr.h:91:23: error: invalid application of 'sizeof' to incomplete type 'TransitionEngine'
+FINDSTR: Cannot open ;
+FINDSTR: Cannot open type

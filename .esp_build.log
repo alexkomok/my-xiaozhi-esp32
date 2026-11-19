@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "C:\Espressif\frameworks\esp-idf-v6.1\tools\idf.py", line 1525, in <module>
+    main()
+  File "C:\Espressif\frameworks\esp-idf-v6.1\tools\idf.py", line 1308, in main
+    cli = init_cli(verbose_output=checks_output)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Espressif\frameworks\esp-idf-v6.1\tools\idf.py", line 1207, in init_cli
+    all_actions = merge_action_lists(all_actions, extension.action_extensions(all_actions, project_dir))
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Espressif\tools\python\v6.1\venv\Lib\site-packages\idf_component_manager\idf_extensions.py", line 388, in action_extensions
+    if Version.coerce(os.getenv('ESP_IDF_VERSION')) >= Version.coerce('6.0.1'):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Espressif\tools\python\v6.1\venv\Lib\site-packages\idf_component_tools\semver\base.py", line 199, in coerce
+    raise ValueError(f'Version string lacks a numerical component: {version_string!r}')
+ValueError: Version string lacks a numerical component: 'frameworks'

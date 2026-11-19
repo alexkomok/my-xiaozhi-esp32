@@ -43,7 +43,7 @@ set(SOURCES "audio/audio_codec.cc"
             "main.cc"
             )
 
-set(INCLUDE_DIRS "." "display" "display/lvgl_display" "display/lvgl_display/jpg" "audio" "audio/demuxer" "protocols")
+set(INCLUDE_DIRS "." "display" "display/lvgl_display" "display/lvgl_display/jpg" "audio" "audio/demuxer" "protocols" "sdcard_slideshow")
 
 # Add board common files
 list(APPEND SOURCES
@@ -910,7 +910,22 @@ file(GLOB BOARD_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/boards/${BOARD_DIR}/*.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/boards/${BOARD_DIR}/*.c
 )
+# Exclude usb_msc.cc as it's conditionally added below based on CONFIG_USE_USB_MSC
+list(FILTER BOARD_SOURCES EXCLUDE REGEX ".*usb_msc\\.cc")
 list(APPEND SOURCES ${BOARD_SOURCES})
+
+# Slideshow MCP module
+if(CONFIG_USE_SDCARD_SLIDESHOW)
+    list(APPEND SOURCES "sdcard_slideshow/sdcard_slideshow.cc")
+    list(APPEND SOURCES "sdcard_slideshow/decoder.cc")
+    list(APPEND SOURCES "sdcard_slideshow/transitions.cc")
+    list(APPEND SOURCES "sdcard_slideshow/config.cc")
+endif()
+
+# USB MSC module
+if(CONFIG_USE_USB_MSC)
+    list(APPEND SOURCES "boards/spotpear/esp32s3-max35-tv-w/usb_msc.cc")
+endif()
 
 # Select one audio engine for each chip family
 if(CONFIG_IDF_TARGET_ESP32S3 OR CONFIG_IDF_TARGET_ESP32P4 OR CONFIG_IDF_TARGET_ESP32S31)

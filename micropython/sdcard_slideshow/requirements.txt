@@ -1,0 +1,41 @@
+# MicroPython dependencies for the SD-card slideshow
+# These are standard library modules on ESP32 MicroPython builds.
+# No external packages are required; this file documents the expected modules.
+
+# Core (always available)
+# uasyncio      - async/await event loop
+# ujson         - JSON encoding/decoding
+# uos           - filesystem access (os)
+# utime         - time functions
+# gc            - garbage collection
+# ucollections  - deque, namedtuple
+# ustruct       - binary packing/unpacking
+# uio           - I/O base classes
+# uerrno        - error codes
+# uhashlib      - hashing (if needed for cache keys)
+# ubinascii     - base64, hexlify
+# ure           - regular expressions (used in natural sort)
+
+# Hardware (ESP32-specific)
+# machine       - Pin, SPI, PWM, ADC, I2C, SDCard
+# esp32         - NVS, watchdog, partition access
+# esp           - flash, reset cause
+# network       - WiFi, AP, STA
+# sdcard        - SD card driver (SPI and SDIO)
+
+# Optional (may not be present in minimal builds)
+# zlib          - PNG IDAT decompression
+# ssl           - MQTT over TLS
+# urequests     - HTTP client (if not using built-in socket)
+# uwebsocket    - WebSocket client (if not using built-in)
+
+# Host development / testing (CPython)
+# pytest        - unit testing
+# pytest-asyncio - async test support
+# sdl2          - simulator framebuffer (pip install pysdl2)
+# pillow        - reference image decoding (pip install pillow)
+
+# Build / deployment
+# mpremote      - file transfer and REPL (pip install mpremote)
+# esptool       - flashing (pip install esptool)
+# rshell        - alternative file transfer (pip install rshell)

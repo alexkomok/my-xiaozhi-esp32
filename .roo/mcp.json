@@ -1,0 +1,24 @@
+{
+	"mcpServers": {
+		"esp-idf": {
+			"command": "C:\\Espressif\\tools\\python\\v6.1\\venv\\Scripts\\python.exe",
+			"args": [
+				"-m",
+				"esp_idf_mcp"
+			],
+			"env": {
+				"IDF_PATH": "C:\\Espressif\\frameworks\\esp-idf-v6.1",
+				"IDF_TOOLS_PATH": "C:\\Espressif\\tools"
+			},
+			"alwaysAllow": [
+				"read_chip_info",
+				"monitor_open",
+				"monitor_close",
+				"monitor_read",
+				"build_project",
+				"flash_project",
+				"set_target"
+			]
+		}
+	}
+}

@@ -55,8 +55,8 @@ public:
     virtual bool ScrollChat(bool down) override;
     virtual void SetPreviewImage(std::unique_ptr<LvglImage> image) override;
     virtual bool ShowMediaFrame(const uint8_t* data, size_t width, size_t height,
-                                size_t stride) override;
-    virtual bool ShowPngImage(const uint8_t* data, size_t size) override;
+                                size_t stride, int rotation = 0) override;
+    virtual bool ShowPngImage(const uint8_t* data, size_t size, int rotation = 0) override;
     virtual void ClearMediaFrame() override;
     virtual void SetupUI() override;
     // Add theme switching function

@@ -82,17 +82,19 @@ public:
     virtual void SetPreviewImage(std::unique_ptr<LvglImage> image);
     // Shows an RGB565 frame fullscreen above the chat screen.
     virtual bool ShowMediaFrame(const uint8_t* data, size_t width, size_t height,
-                                size_t stride) {
+                                size_t stride, int rotation = 0) {
         (void)data;
         (void)width;
         (void)height;
         (void)stride;
+        (void)rotation;
         return false;
     }
     // Decodes an in-memory PNG (up to 1 megapixel) and shows it fullscreen.
-    virtual bool ShowPngImage(const uint8_t* data, size_t size) {
+    virtual bool ShowPngImage(const uint8_t* data, size_t size, int rotation = 0) {
         (void)data;
         (void)size;
+        (void)rotation;
         return false;
     }
     // Removes the fullscreen media overlay and frees its frame buffer.

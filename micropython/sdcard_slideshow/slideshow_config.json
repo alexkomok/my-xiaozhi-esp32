@@ -1,0 +1,270 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "XiaoZhi SD-card Slideshow Configuration",
+  "description": "Complete configuration for the ESP32-S3-MAX35-TV-W slideshow. All keys are optional; missing keys fall back to the defaults documented in config.py.",
+  "type": "object",
+  "properties": {
+    "hardware": {
+      "type": "object",
+      "description": "Pin mappings and hardware parameters for the ESP32-S3-MAX35-TV-W board.",
+      "properties": {
+        "sd_spi": {
+          "type": "object",
+          "description": "SD card SPI (HSPI) pins. The board uses GPIO 12=MISO, 13=MOSI, 14=SCK, 15=CS.",
+          "properties": {
+            "miso": { "type": "integer", "default": 12, "description": "MISO pin" },
+            "mosi": { "type": "integer", "default": 13, "description": "MOSI pin" },
+            "sck": { "type": "integer", "default": 14, "description": "SCK pin" },
+            "cs": { "type": "integer", "default": 15, "description": "Chip select pin" },
+            "freq": { "type": "integer", "default": 20000000, "description": "SPI clock frequency in Hz" }
+          },
+          "required": ["miso", "mosi", "sck", "cs", "freq"]
+        },
+        "sdio_fallback": {
+          "type": "boolean",
+          "default": true,
+          "description": "Try 4-bit SDIO (SDMMC slot 1) before falling back to SPI."
+        },
+        "display_spi": {
+          "type": "object",
+          "description": "ST7796 display SPI (VSPI) pins. The board uses GPIO 11=MOSI, 10=SCK, 9=DC, 8=CS, 7=RST, 6=BL.",
+          "properties": {
+            "mosi": { "type": "integer", "default": 11, "description": "MOSI pin" },
+            "sck": { "type": "integer", "default": 10, "description": "SCK pin" },
+            "dc": { "type": "integer", "default": 9, "description": "Data/Command pin" },
+            "cs": { "type": "integer", "default": 8, "description": "Chip select pin" },
+            "rst": { "type": "integer", "default": 7, "description": "Reset pin" },
+            "bl": { "type": "integer", "default": 6, "description": "Backlight PWM pin" },
+            "freq": { "type": "integer", "default": 80000000, "description": "SPI clock frequency in Hz (80 MHz max for ST7796)" }
+          },
+          "required": ["mosi", "sck", "dc", "cs", "rst", "bl", "freq"]
+        },
+        "display": {
+          "type": "object",
+          "description": "Display geometry and colour format.",
+          "properties": {
+            "width": { "type": "integer", "default": 320, "description": "Display width in pixels" },
+            "height": { "type": "integer", "default": 480, "description": "Display height in pixels" },
+            "rotation": { "type": "integer", "default": 0, "enum": [0, 90, 180, 270], "description": "Display rotation in degrees" },
+            "rgb565_swap": { "type": "boolean", "default": false, "description": "Swap RGB565 byte order (some panels expect little-endian)" }
+          },
+          "required": ["width", "height", "rotation", "rgb565_swap"]
+        },
+        "buttons": {
+          "type": "object",
+          "description": "Physical button pins (active low with pull-up).",
+          "properties": {
+            "boot": { "type": "integer", "default": 0, "description": "BOOT button pin (GPIO 0)" },
+            "user": { "type": "integer", "default": 14, "description": "USER button pin (GPIO 14)" }
+          },
+          "required": ["boot", "user"]
+        },
+        "ir_receiver": {
+          "type": "object",
+          "description": "Optional NEC IR remote receiver.",
+          "properties": {
+            "enabled": { "type": "boolean", "default": false, "description": "Enable IR decoding" },
+            "pin": { "type": "integer", "default": 4, "description": "IR receiver pin" }
+          },
+          "required": ["enabled", "pin"]
+        },
+        "backlight": {
+          "type": "object",
+          "description": "Backlight PWM configuration with gamma correction.",
+          "properties": {
+            "pwm_freq": { "type": "integer", "default": 5000, "description": "PWM frequency in Hz" },
+            "gamma": { "type": "number", "default": 2.2, "minimum": 0.5, "maximum": 3.0, "description": "Gamma correction exponent" },
+            "default_brightness": { "type": "integer", "default": 220, "minimum": 0, "maximum": 255, "description": "Default brightness 0-255" }
+          },
+          "required": ["pwm_freq", "gamma", "default_brightness"]
+        }
+      },
+      "required": ["sd_spi", "sdio_fallback", "display_spi", "display", "buttons", "ir_receiver", "backlight"]
+    },
+    "scan": {
+      "type": "object",
+      "description": "Filesystem scanning parameters.",
+      "properties": {
+        "root": { "type": "string", "default": "/sd", "description": "Root directory on the SD card to scan" },
+        "recursive": { "type": "boolean", "default": true, "description": "Recurse into subdirectories" },
+        "max_depth": { "type": "integer", "default": 6, "minimum": 1, "maximum": 32, "description": "Maximum directory depth" },
+        "max_files": { "type": "integer", "default": 2000, "minimum": 1, "maximum": 100000, "description": "Maximum number of image files to index" },
+        "extensions": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": [".jpg", ".jpeg", ".png", ".bmp", ".gif"],
+          "description": "File extensions to include (case-insensitive)"
+        },
+        "sort": {
+          "type": "string",
+          "default": "natural",
+          "enum": ["natural", "exif", "name", "mtime"],
+          "description": "Sort order: natural (alphanumeric), exif (DateTimeOriginal), name (lexicographic), mtime (file modification time)"
+        },
+        "shuffle": { "type": "boolean", "default": false, "description": "Randomise the order after sorting" },
+        "repeat": { "type": "boolean", "default": true, "description": "Loop back to the first image after the last" }
+      },
+      "required": ["root", "recursive", "max_depth", "max_files", "extensions", "sort", "shuffle", "repeat"]
+    },
+    "playback": {
+      "type": "object",
+      "description": "Slideshow timing and transition settings.",
+      "properties": {
+        "slide_duration": { "type": "number", "default": 8.0, "minimum": 1.0, "maximum": 300.0, "description": "Seconds each slide is shown" },
+        "transition_duration": { "type": "number", "default": 0.8, "minimum": 0.0, "maximum": 5.0, "description": "Seconds for the transition effect" },
+        "transition": {
+          "type": "string",
+          "default": "fade",
+          "enum": ["none", "fade", "slide", "wipe", "zoom"],
+          "description": "Transition effect between slides"
+        },
+        "ken_burns": { "type": "boolean", "default": false, "description": "Enable slow pan/zoom (Ken Burns effect) on static images" },
+        "ken_burns_intensity": { "type": "number", "default": 0.08, "minimum": 0.0, "maximum": 0.5, "description": "Ken Burns intensity (0 = off, higher = faster motion)" },
+        "auto_rotate": { "type": "boolean", "default": true, "description": "Auto-rotate images based on EXIF orientation tag" },
+        "pause_on_start": { "type": "boolean", "default": false, "description": "Start in paused mode" }
+      },
+      "required": ["slide_duration", "transition_duration", "transition", "ken_burns", "ken_burns_intensity", "auto_rotate", "pause_on_start"]
+    },
+    "image": {
+      "type": "object",
+      "description": "Image decoding, scaling and output parameters.",
+      "properties": {
+        "fit": {
+          "type": "string",
+          "default": "fit",
+          "enum": ["fit", "fill", "stretch"],
+          "description": "How to fit the image to the display: fit (letterbox), fill (crop), stretch (distort)"
+        },
+        "dither": {
+          "type": "string",
+          "default": "floyd_steinberg",
+          "enum": ["none", "floyd_steinberg", "bayer"],
+          "description": "Dithering algorithm for RGB888 to RGB565 conversion"
+        },
+        "max_decode_dimension": { "type": "integer", "default": 480, "minimum": 32, "maximum": 1024, "description": "Maximum pixel dimension for decoded images (downscale bound)" },
+        "streaming": { "type": "boolean", "default": true, "description": "Use streaming decode to avoid full-frame buffers" },
+        "progressive_jpeg": { "type": "boolean", "default": true, "description": "Enable progressive JPEG decoding (requires hardware codec)" },
+        "preload_next": { "type": "boolean", "default": true, "description": "Pre-decode the next image while the current slide is displayed" },
+        "cache_size": { "type": "integer", "default": 2, "minimum": 0, "maximum": 8, "description": "LRU cache size for decoded frames (0 = disabled)" },
+        "low_memory_mode": { "type": "boolean", "default": false, "description": "Reduce buffer sizes and disable transitions when memory is low" }
+      },
+      "required": ["fit", "dither", "max_decode_dimension", "streaming", "progressive_jpeg", "preload_next", "cache_size", "low_memory_mode"]
+    },
+    "network": {
+      "type": "object",
+      "description": "Wi-Fi, web UI and MQTT configuration.",
+      "properties": {
+        "wifi_ap": {
+          "type": "object",
+          "description": "Access point mode for standalone operation.",
+          "properties": {
+            "enabled": { "type": "boolean", "default": false, "description": "Enable Wi-Fi AP" },
+            "ssid": { "type": "string", "default": "Slideshow", "description": "AP SSID" },
+            "password": { "type": "string", "default": "slideshow", "description": "AP password (min 8 chars)" },
+            "channel": { "type": "integer", "default": 6, "minimum": 1, "maximum": 13, "description": "Wi-Fi channel" }
+          },
+          "required": ["enabled", "ssid", "password", "channel"]
+        },
+        "wifi_sta": {
+          "type": "object",
+          "description": "Station mode for connecting to an existing network.",
+          "properties": {
+            "enabled": { "type": "boolean", "default": false, "description": "Enable Wi-Fi station" },
+            "ssid": { "type": "string", "default": "", "description": "Network SSID" },
+            "password": { "type": "string", "default": "", "description": "Network password" }
+          },
+          "required": ["enabled", "ssid", "password"]
+        },
+        "web": {
+          "type": "object",
+          "description": "Built-in web control interface.",
+          "properties": {
+            "enabled": { "type": "boolean", "default": true, "description": "Enable web server" },
+            "port": { "type": "integer", "default": 80, "minimum": 1, "maximum": 65535, "description": "HTTP port" }
+          },
+          "required": ["enabled", "port"]
+        },
+        "mqtt": {
+          "type": "object",
+          "description": "MQTT client for Home Assistant integration.",
+          "properties": {
+            "enabled": { "type": "boolean", "default": false, "description": "Enable MQTT" },
+            "host": { "type": "string", "default": "", "description": "MQTT broker hostname or IP" },
+            "port": { "type": "integer", "default": 1883, "minimum": 1, "maximum": 65535, "description": "MQTT broker port" },
+            "user": { "type": "string", "default": "", "description": "MQTT username" },
+            "password": { "type": "string", "default": "", "description": "MQTT password" },
+            "client_id": { "type": "string", "default": "xiaozhi-slideshow", "description": "MQTT client ID" },
+            "topic_prefix": { "type": "string", "default": "slideshow", "description": "Topic prefix for all published messages" },
+            "discovery": { "type": "boolean", "default": true, "description": "Publish Home Assistant discovery messages" }
+          },
+          "required": ["enabled", "host", "port", "user", "password", "client_id", "topic_prefix", "discovery"]
+        },
+        "syslog": {
+          "type": "object",
+          "description": "Optional syslog/UDP log forwarding.",
+          "properties": {
+            "enabled": { "type": "boolean", "default": false, "description": "Enable syslog forwarding" },
+            "host": { "type": "string", "default": "", "description": "Syslog server hostname or IP" },
+            "port": { "type": "integer", "default": 514, "minimum": 1, "maximum": 65535, "description": "Syslog server port" }
+          },
+          "required": ["enabled", "host", "port"]
+        }
+      },
+      "required": ["wifi_ap", "wifi_sta", "web", "mqtt", "syslog"]
+    },
+    "playlists": {
+      "type": "object",
+      "description": "Named playlists. Each playlist filters the scanned image set by directory prefix and can override playback settings.",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "paths": {
+            "type": "array",
+            "items": { "type": "string" },
+            "default": [],
+            "description": "Directory prefixes (relative to scan.root) to include. Empty = all images."
+          },
+          "transition": {
+            "type": "string",
+            "enum": ["none", "fade", "slide", "wipe", "zoom"],
+            "description": "Override transition for this playlist"
+          },
+          "slide_duration": {
+            "type": "number",
+            "minimum": 1.0,
+            "maximum": 300.0,
+            "description": "Override slide duration for this playlist"
+          }
+        }
+      },
+      "default": {
+        "default": { "paths": [], "transition": "fade", "slide_duration": 8.0 }
+      }
+    },
+    "active_playlist": {
+      "type": "string",
+      "default": "default",
+      "description": "Name of the playlist to use at startup"
+    },
+    "logging": {
+      "type": "object",
+      "description": "Logging configuration.",
+      "properties": {
+        "level": { "type": "string", "default": "INFO", "enum": ["DEBUG", "INFO", "WARNING", "ERROR"], "description": "Minimum log level" },
+        "circular_buffer": { "type": "integer", "default": 256, "minimum": 16, "maximum": 4096, "description": "In-memory circular log capacity" },
+        "timestamps": { "type": "boolean", "default": true, "description": "Prefix log entries with tick timestamps" }
+      },
+      "required": ["level", "circular_buffer", "timestamps"]
+    },
+    "statistics": {
+      "type": "object",
+      "description": "Runtime statistics tracking.",
+      "properties": {
+        "enabled": { "type": "boolean", "default": true, "description": "Enable statistics collection" },
+        "persist": { "type": "boolean", "default": true, "description": "Persist statistics to NVS across reboots" }
+      },
+      "required": ["enabled", "persist"]
+    }
+  },
+  "required": ["hardware", "scan", "playback", "image", "network", "playlists", "active_playlist", "logging", "statistics"]
+}

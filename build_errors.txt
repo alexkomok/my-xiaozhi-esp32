@@ -1,0 +1,6 @@
+usage: build.py [-h] [-c CONFIG] [--list-boards] [--list-languages]
+                [--list-wake-words] [--json] [--name NAME] [--language LOCALE]
+                [--wake-word MODEL] [--build-options-json JSON] [--zip]
+                [--select-changed]
+                [board]
+build.py: error: unrecognized arguments: ; findstr /N error: build_stdout.txt

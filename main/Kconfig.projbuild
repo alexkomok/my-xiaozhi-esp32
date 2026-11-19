@@ -1141,4 +1141,21 @@ menu "TAIJIPAI_S3_CONFIG"
         启动双声道
 endmenu
 
+config USE_SDCARD_SLIDESHOW
+    bool "Enable SD card slideshow MCP module"
+    default n
+    help
+        Enable the native C++ slideshow MCP module for SD card image playback.
+        If disabled, the sdcard_slideshow module is excluded from the build.
+
+config USE_USB_MSC
+    bool "Enable USB Mass Storage (MSC) for the microSD card"
+    default n
+    depends on IDF_TARGET_ESP32S3
+    help
+        Expose the microSD card to a host PC over USB OTG as a USB mass-storage
+        device using TinyUSB. The mount point can be switched between the
+        application and the USB host at runtime via MCP tools. Only one side
+        can access the card at a time.
+
 endmenu

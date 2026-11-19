@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XiaoZhi Slideshow Control</title>
+<style>
+:root {
+  --bg: #1a1a2e;
+  --fg: #eaeaea;
+  --accent: #00d4aa;
+  --accent-dim: #00a888;
+  --card: #16213e;
+  --border: #0f3460;
+  --danger: #e94560;
+  --warning: #f39c12;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+       background: var(--bg); color: var(--fg); min-height: 100vh; }
+header { background: var(--card); border-bottom: 1px solid var(--border);
+         padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+header h1 { font-size: 1.25rem; font-weight: 600; }
+.status { display: flex; gap: 1rem; align-items: center; font-size: 0.875rem; }
+.badge { padding: 0.25rem 0.5rem; border-radius: 999px; font-weight: 600; font-size: 0.75rem; }
+.badge.running { background: var(--accent); color: #000; }
+.badge.paused { background: var(--warning); color: #000; }
+.badge.stopped { background: var(--danger); color: #fff; }
+main { padding: 1.5rem; max-width: 900px; margin: 0 auto; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; }
+.card h2 { font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em;
+           color: var(--accent); margin-bottom: 0.75rem; }
+.btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem;
+       border: none; border-radius: 6px; font-size: 0.875rem; font-weight: 500; cursor: pointer;
+       transition: background 0.15s, transform 0.05s; }
+.btn:active { transform: scale(0.98); }
+.btn-primary { background: var(--accent); color: #000; }
+.btn-primary:hover { background: var(--accent-dim); }
+.btn-secondary { background: var(--border); color: var(--fg); }
+.btn-secondary:hover { background: #1a4a7a; }
+.btn-danger { background: var(--danger); color: #fff; }
+.btn-danger:hover { background: #c0392b; }
+.btn-group { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+.slider { width: 100%; accent-color: var(--accent); }
+.slider-row { display: flex; align-items: center; gap: 0.75rem; margin: 0.5rem 0; }
+.slider-label { min-width: 120px; font-size: 0.875rem; }
+.slider-value { min-width: 40px; text-align: right; font-variant-numeric: tabular-nums; }
+.select { width: 100%; padding: 0.5rem; border: 1px solid var(--border); background: var(--bg);
+          color: var(--fg); border-radius: 6px; font-size: 0.875rem; }
+.preview { width: 100%; aspect-ratio: 2/3; background: #000; border-radius: 4px;
+           border: 1px solid var(--border); object-fit: contain; }
+.log { font-family: monospace; font-size: 0.75rem; max-height: 200px; overflow-y: auto;
+       background: #0d1117; border: 1px solid var(--border); border-radius: 4px; padding: 0.5rem; }
+.log-entry { border-bottom: 1px solid var(--border); padding: 0.25rem 0; }
+.log-entry:last-child { border-bottom: none; }
+.log-time { color: #8b949e; }
+.log-level { font-weight: 600; }
+.log-level.ERROR { color: var(--danger); }
+.log-level.WARNING { color: var(--warning); }
+.log-level.INFO { color: var(--accent); }
+.log-level.DEBUG { color: #8b949e; }
+.image-list { max-height: 300px; overflow-y: auto; }
+.image-item { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem;
+              border-bottom: 1px solid var(--border); cursor: pointer; }
+.image-item:hover { background: var(--border); }
+.image-item.active { background: rgba(0, 212, 170, 0.1); }
+.image-thumb { width: 48px; height: 72px; object-fit: cover; border-radius: 4px; background: #000; }
+.image-name { flex: 1; font-size: 0.8125rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 600px) {
+  .slider-label { min-width: auto; }
+  .btn-group { flex-direction: column; }
+  .btn-group .btn { width: 100%; justify-content: center; }
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>XiaoZhi Slideshow</h1>
+  <div class="status">
+    <span id="statusBadge" class="badge stopped">Stopped</span>
+    <span id="indexInfo">0 / 0</span>
+  </div>
+</header>
+<main>
+  <div class="grid">
+    <section class="card">
+      <h2>Live Preview</h2>
+      <img id="preview" class="preview" alt="Live preview" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+    </section>
+    <section class="card">
+      <h2>Playback Controls</h2>
+      <div class="btn-group">
+        <button id="btnPrev" class="btn btn-secondary">⏮ Prev</button>
+        <button id="btnPlay" class="btn btn-primary">▶ Play</button>
+        <button id="btnPause" class="btn btn-secondary">⏸ Pause</button>
+        <button id="btnNext" class="btn btn-secondary">Next ⏭</button>
+      </div>
+      <div class="slider-row">
+        <span class="slider-label">Slide Duration</span>
+        <input id="slideDuration" type="range" class="slider" min="1" max="300" step="1" value="8">
+        <span id="slideDurationVal" class="slider-value">8s</span>
+      </div>
+      <div class="slider-row">
+        <span class="slider-label">Transition</span>
+        <select id="transition" class="select">
+          <option value="fade">Fade</option>
+          <option value="slide">Slide</option>
+          <option value="wipe">Wipe</option>
+          <option value="zoom">Zoom</option>
+          <option value="none">None</option>
+        </select>
+      </div>
+      <div class="slider-row">
+        <span class="slider-label">Transition Duration</span>
+        <input id="transDuration" type="range" class="slider" min="0" max="5" step="0.1" value="0.8">
+        <span id="transDurationVal" class="slider-value">0.8s</span>
+      </div>
+    </section>
+    <section class="card">
+      <h2>Playlist</h2>
+      <select id="playlistSelect" class="select" style="margin-bottom: 0.5rem;"></select>
+      <div class="image-list" id="imageList"></div>
+    </section>
+    <section class="card">
+      <h2>Statistics</h2>
+      <div id="stats" style="font-size: 0.875rem; line-height: 1.8;"></div>
+    </section>
+    <section class="card">
+      <h2>Log</h2>
+      <div id="log" class="log"></div>
+    </section>
+  </div>
+</main>
+<script>
+(function() {
+  const wsProto = location.protocol === 'https:' ? 'wss:' : 'ws:';
+  const wsUrl = wsProto + '//' + location.host + '/ws';
+  let ws = null;
+  let images = [];
+  let currentIndex = -1;
+  let status = 'stopped';
+
+  const $ = (id) => document.getElementById(id);
+  const api = (path, method='GET', body) =>
+    fetch('/api' + path, { method, headers: {'Content-Type': 'application/json'},
+      body: body ? JSON.stringify(body) : undefined }).then(r => r.json());
+
+  function connectWs() {
+    ws = new WebSocket(wsUrl);
+    ws.binaryType = 'arraybuffer';
+    ws.onopen = () => console.log('WS connected');
+    ws.onmessage = (e) => {
+      if (e.data instanceof ArrayBuffer) {
+        const blob = new Blob([e.data], {type: 'image/jpeg'});
+        $('preview').src = URL.createObjectURL(blob);
+      }
+    };
+    ws.onclose = () => setTimeout(connectWs, 2000);
+    ws.onerror = () => ws.close();
+  }
+
+  async function loadStatus() {
+    const s = await api('/status');
+    status = s.running ? (s.paused ? 'paused' : 'running') : 'stopped';
+    currentIndex = s.index;
+    updateStatusUI(s);
+  }
+
+  function updateStatusUI(s) {
+    const badge = $('statusBadge');
+    badge.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+    badge.className = 'badge ' + status;
+    $('indexInfo').textContent = (s.index + 1) + ' / ' + s.total;
+  }
+
+  async function loadImages() {
+    images = await api('/images');
+    renderImageList();
+  }
+
+  async function loadPlaylists() {
+    const pl = await api('/playlists');
+    const sel = $('playlistSelect');
+    sel.innerHTML = '';
+    for (const name of Object.keys(pl)) {
+      const opt = document.createElement('option');
+      opt.value = name;
+      opt.textContent = name;
+      sel.appendChild(opt);
+    }
+  }
+
+  async function loadStats() {
+    const s = await api('/stats');
+    $('stats').innerHTML = Object.entries(s).map(([k,v]) =>
+      '<div><strong>' + k + ':</strong> ' + v + '</div>').join('');
+  }
+
+  async function loadLog() {
+    const s = await api('/status'); // log not exposed; placeholder
+  }
+
+  function renderImageList() {
+    const list = $('imageList');
+    list.innerHTML = images.map((img, i) => `
+      <div class="image-item${i === currentIndex ? ' active' : ''}" data-index="${i}">
+        <img class="image-thumb" src="/api/image/${encodeURIComponent(img)}?thumb=1" alt="">
+        <span class="image-name">${img}</span>
+      </div>
+    `).join('');
+    list.querySelectorAll('.image-item').forEach(el => {
+      el.onclick = () => showImage(parseInt(el.dataset.index));
+    });
+  }
+
+  async function showImage(index) {
+    if (index < 0 || index >= images.length) return;
+    currentIndex = index;
+    const img = images[index];
+    try {
+      const resp = await fetch('/api/image/' + encodeURIComponent(img));
+      const blob = await resp.blob();
+      $('preview').src = URL.createObjectURL(blob);
+      renderImageList();
+    } catch (e) {
+      console.error('Failed to load image', e);
+    }
+  }
+
+  // Control handlers
+  $('btnPrev').onclick = () => api('/control/prev', 'POST');
+  $('btnNext').onclick = () => api('/control/next', 'POST');
+  $('btnPlay').onclick = () => api('/control/play', 'POST');
+  $('btnPause').onclick = () => api('/control/pause', 'POST');
+  $('slideDuration').oninput = (e) => {
+    $('slideDurationVal').textContent = e.target.value + 's';
+  };
+  $('slideDuration').onchange = (e) => api('/control/slide_duration', 'POST', e.target.value);
+  $('transDuration').oninput = (e) => {
+    $('transDurationVal').textContent = e.target.value + 's';
+  };
+  $('transition').onchange = (e) => api('/control/transition', 'POST', e.target.value);
+  $('playlistSelect').onchange = (e) => api('/control/playlist', 'POST', e.target.value);
+
+  // Periodic refresh
+  async function refresh() {
+    await loadStatus();
+    await loadStats();
+  }
+
+  // Init
+  connectWs();
+  loadImages();
+  loadPlaylists();
+  setInterval(refresh, 2000);
+  refresh();
+})();
+</script>
+</body>
+</html>

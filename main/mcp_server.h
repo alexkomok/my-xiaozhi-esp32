@@ -225,6 +225,15 @@ public:
         esp_system_abort("MCP property lookup failed because the property was not declared");
     }
 
+    bool has(const std::string& name) const {
+        for (const auto& property : properties_) {
+            if (property.name() == name) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     auto begin() { return properties_.begin(); }
     auto end() { return properties_.end(); }
 

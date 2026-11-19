@@ -1131,14 +1131,19 @@ void LcdDisplay::ClearChatMessages() {
 }
 #endif
 
-bool LcdDisplay::ShowMediaFrame(const uint8_t* data, size_t width, size_t height, size_t stride) {
+bool LcdDisplay::ShowMediaFrame(const uint8_t* data, size_t width, size_t height, size_t stride,
+                                int rotation) {
     DisplayLockGuard lock(this);
     if (content_ == nullptr || data == nullptr || width == 0 || height == 0 ||
         width > SIZE_MAX / 2 / height || stride < width * sizeof(uint16_t)) {
         return false;
     }
 
-    size_t frame_size = width * height * sizeof(uint16_t);
+    // For 90°/270° rotation, swap width and height
+    size_t display_width = (rotation == 90 || rotation == 270) ? height : width;
+    size_t display_height = (rotation == 90 || rotation == 270) ? width : height;
+
+    size_t frame_size = display_width * display_height * sizeof(uint16_t);
     if (frame_size > media_frame_buffer_size_) {
         uint8_t* new_buffer = static_cast<uint8_t*>(
             heap_caps_malloc(frame_size, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT));
@@ -1152,9 +1157,49 @@ bool LcdDisplay::ShowMediaFrame(const uint8_t* data, size_t width, size_t height
         media_frame_buffer_size_ = frame_size;
     }
 
-    for (size_t row = 0; row < height; row++) {
-        memcpy(media_frame_buffer_ + row * width * sizeof(uint16_t), data + row * stride,
-               width * sizeof(uint16_t));
+    if (rotation == 0) {
+        for (size_t row = 0; row < height; row++) {
+            memcpy(media_frame_buffer_ + row * width * sizeof(uint16_t), data + row * stride,
+                   width * sizeof(uint16_t));
+        }
+    } else if (rotation == 90) {
+        // 90° clockwise: pixel (x, y) -> (height-1-y, x)
+        for (size_t y = 0; y < height; y++) {
+            const uint16_t* source_row = reinterpret_cast<const uint16_t*>(data + y * stride);
+            for (size_t x = 0; x < width; x++) {
+                size_t new_x = height - 1 - y;
+                size_t new_y = x;
+                reinterpret_cast<uint16_t*>(media_frame_buffer_)[new_y * display_width + new_x] =
+                    source_row[x];
+            }
+        }
+    } else if (rotation == 180) {
+        // 180°: pixel (x, y) -> (width-1-x, height-1-y)
+        for (size_t y = 0; y < height; y++) {
+            const uint16_t* source_row = reinterpret_cast<const uint16_t*>(data + y * stride);
+            for (size_t x = 0; x < width; x++) {
+                size_t new_x = width - 1 - x;
+                size_t new_y = height - 1 - y;
+                reinterpret_cast<uint16_t*>(media_frame_buffer_)[new_y * display_width + new_x] =
+                    source_row[x];
+            }
+        }
+    } else if (rotation == 270) {
+        // 270° clockwise (= 90° CCW): pixel (x, y) -> (y, width-1-x)
+        for (size_t y = 0; y < height; y++) {
+            const uint16_t* source_row = reinterpret_cast<const uint16_t*>(data + y * stride);
+            for (size_t x = 0; x < width; x++) {
+                size_t new_x = y;
+                size_t new_y = width - 1 - x;
+                reinterpret_cast<uint16_t*>(media_frame_buffer_)[new_y * display_width + new_x] =
+                    source_row[x];
+            }
+        }
+    } else {
+        for (size_t row = 0; row < height; row++) {
+            memcpy(media_frame_buffer_ + row * width * sizeof(uint16_t), data + row * stride,
+                   width * sizeof(uint16_t));
+        }
     }
 
     if (media_overlay_ == nullptr) {
@@ -1177,13 +1222,13 @@ bool LcdDisplay::ShowMediaFrame(const uint8_t* data, size_t width, size_t height
     media_frame_desc_.data = media_frame_buffer_;
     media_frame_desc_.header.magic = LV_IMAGE_HEADER_MAGIC;
     media_frame_desc_.header.cf = LV_COLOR_FORMAT_RGB565;
-    media_frame_desc_.header.w = width;
-    media_frame_desc_.header.h = height;
-    media_frame_desc_.header.stride = width * sizeof(uint16_t);
+    media_frame_desc_.header.w = display_width;
+    media_frame_desc_.header.h = display_height;
+    media_frame_desc_.header.stride = display_width * sizeof(uint16_t);
     lv_image_set_src(media_image_, &media_frame_desc_);
 
-    lv_coord_t zoom_w = (LV_HOR_RES * 256) / width;
-    lv_coord_t zoom_h = (LV_VER_RES * 256) / height;
+    lv_coord_t zoom_w = (LV_HOR_RES * 256) / display_width;
+    lv_coord_t zoom_h = (LV_VER_RES * 256) / display_height;
     lv_coord_t zoom = std::min(zoom_w, zoom_h);
     if (zoom > 256) {
         zoom = 256;
@@ -1194,7 +1239,7 @@ bool LcdDisplay::ShowMediaFrame(const uint8_t* data, size_t width, size_t height
     return true;
 }
 
-bool LcdDisplay::ShowPngImage(const uint8_t* data, size_t size) {
+bool LcdDisplay::ShowPngImage(const uint8_t* data, size_t size, int rotation) {
     if (data == nullptr || size < 24 || size > 8 * 1024 * 1024 ||
         memcmp(data, "\x89PNG\r\n\x1a\n", 8) != 0) {
         ESP_LOGE(TAG, "PNG signature or file size is invalid (%u bytes)", size);
@@ -1273,7 +1318,7 @@ bool LcdDisplay::ShowPngImage(const uint8_t* data, size_t size) {
         lv_image_decoder_close(&decoder);
     }
 
-    bool displayed = ShowMediaFrame(rgb565_data, width, height, width * sizeof(uint16_t));
+    bool displayed = ShowMediaFrame(rgb565_data, width, height, width * sizeof(uint16_t), rotation);
     heap_caps_free(rgb565_data);
     if (!displayed) {
         ESP_LOGE(TAG, "Could not display decoded PNG frame");

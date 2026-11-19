@@ -6,11 +6,17 @@
 #include "display/lvgl_display/jpg/jpeg_to_image.h"
 #include "esp32_camera.h"
 #include "mcp_server.h"
+#if CONFIG_USE_SDCARD_SLIDESHOW
+#include "sdcard_slideshow.h"
+#endif
+#if CONFIG_USE_USB_MSC
+#include "usb_msc.h"
+#endif
 #include "wifi_board.h"
 
-#include <dirent.h>
 #include <esp_heap_caps.h>
 #include <esp_vfs_fat.h>
+#include <dirent.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 #include <jpeglib.h>
@@ -21,8 +27,8 @@
 #include <atomic>
 #include <cctype>
 #include <cerrno>
-#include <cstdio>
 #include <csetjmp>
+#include <cstdio>
 #include <new>
 #include <string>
 
@@ -109,7 +115,7 @@ bool ReadNextMjpegFrame(FILE* file, std::string& frame, size_t& bytes_remaining)
 }
 
 // Decodes a JPEG (baseline or progressive) downscaled to fit 512 px and shows it fullscreen.
-bool DecodeJpegAndShow(Display* display, const uint8_t* data, size_t size,
+bool DecodeJpegAndShow(Display* display, const uint8_t* data, size_t size, int rotation,
                        const std::atomic<bool>* stop_requested = nullptr) {
     constexpr size_t kMaxJpegInputBytes = 8 * 1024 * 1024;
     constexpr size_t kMaxDecodedBytes = 2 * 1024 * 1024;
@@ -170,8 +176,8 @@ bool DecodeJpegAndShow(Display* display, const uint8_t* data, size_t size,
     const size_t width = context->decoder.output_width;
     const size_t height = context->decoder.output_height;
     const size_t output_size = width * height * sizeof(uint16_t);
-    context->rgb565 = static_cast<uint8_t*>(
-        heap_caps_malloc(output_size, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT));
+    context->rgb565 =
+        static_cast<uint8_t*>(heap_caps_malloc(output_size, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT));
     if (context->rgb565 == nullptr) {
         jpeg_destroy_decompress(&context->decoder);
         context->decoder_created = false;
@@ -193,8 +199,8 @@ bool DecodeJpegAndShow(Display* display, const uint8_t* data, size_t size,
         size_t y = context->decoder.output_scanline - 1;
         for (size_t x = 0; x < width; x++) {
             const uint8_t* pixel = row[0] + x * 3;
-            destination[y * width + x] = ((pixel[0] >> 3) << 11) |
-                                         ((pixel[1] >> 2) << 5) | (pixel[2] >> 3);
+            destination[y * width + x] =
+                ((pixel[0] >> 3) << 11) | ((pixel[1] >> 2) << 5) | (pixel[2] >> 3);
         }
     }
 
@@ -207,7 +213,7 @@ bool DecodeJpegAndShow(Display* display, const uint8_t* data, size_t size,
     }
     bool shown = stop_requested == nullptr || !stop_requested->load()
                      ? display->ShowMediaFrame(context->rgb565, width, height,
-                                               width * sizeof(uint16_t))
+                                               width * sizeof(uint16_t), rotation)
                      : false;
     heap_caps_free(context->rgb565);
     return shown;
@@ -263,6 +269,9 @@ private:
     std::atomic<bool> video_playing_{false};
     std::atomic<bool> video_stop_requested_{false};
     std::atomic<bool> image_shown_{false};
+#if CONFIG_USE_SDCARD_SLIDESHOW
+    slideshow::SlideshowMCP* slideshow_ = nullptr;
+#endif
 
     struct VideoPlaybackRequest {
         SpotpearMax35TvBoard* board;
@@ -291,7 +300,7 @@ private:
             }
 
             if (!DecodeJpegAndShow(display, reinterpret_cast<const uint8_t*>(frame.data()),
-                                   frame.size(), &video_stop_requested_)) {
+                                   frame.size(), 90, &video_stop_requested_)) {
                 if (!video_stop_requested_.load()) {
                     ESP_LOGE("MAX35_SD", "Could not display decoded frame from %s", path.c_str());
                 }
@@ -312,7 +321,8 @@ private:
     }
 
     bool StartVideoPlayback(const std::string& path, bool loop) {
-        auto request = std::make_unique<VideoPlaybackRequest>(VideoPlaybackRequest{this, path, loop});
+        auto request =
+            std::make_unique<VideoPlaybackRequest>(VideoPlaybackRequest{this, path, loop});
         bool expected = false;
         if (!video_playing_.compare_exchange_strong(expected, true)) {
             return false;
@@ -347,8 +357,8 @@ private:
         mount_config.max_files = 8;
         mount_config.allocation_unit_size = 16 * 1024;
 
-        esp_err_t err = esp_vfs_fat_sdmmc_mount(SD_CARD_MOUNT_POINT, &host, &slot, &mount_config,
-                                                &sd_card_);
+        esp_err_t err =
+            esp_vfs_fat_sdmmc_mount(SD_CARD_MOUNT_POINT, &host, &slot, &mount_config, &sd_card_);
         if (err != ESP_OK) {
             ESP_LOGE("MAX35_SD", "Failed to mount SD card: %s", esp_err_to_name(err));
             return false;
@@ -415,9 +425,8 @@ private:
                 continue;
             }
 
-            std::string relative_path = relative_dir.empty()
-                                            ? entry->d_name
-                                            : relative_dir + "/" + entry->d_name;
+            std::string relative_path =
+                relative_dir.empty() ? entry->d_name : relative_dir + "/" + entry->d_name;
             std::string full_path = std::string(SD_CARD_MOUNT_POINT) + "/" + relative_path;
             struct stat info = {};
             if (stat(full_path.c_str(), &info) != 0) {
@@ -487,17 +496,21 @@ private:
             "self.sdcard.list_media",
             "List all image, MJPEG video, and MP3 audio files on the MAX35 microSD card. Paths are "
             "relative to the card root and can be passed to the corresponding media tools.",
-            PropertyList(), [this](const PropertyList&) -> ToolResult { return ListMedia(nullptr); });
+            PropertyList(),
+            [this](const PropertyList&) -> ToolResult { return ListMedia(nullptr); });
         mcp_server.AddTool(
             "self.sdcard.list_images",
             "List only the JPG/JPEG/PNG pictures on the microSD card, including camera photos.",
-            PropertyList(), [this](const PropertyList&) -> ToolResult { return ListMedia("image"); });
+            PropertyList(),
+            [this](const PropertyList&) -> ToolResult { return ListMedia("image"); });
         mcp_server.AddTool(
             "self.sdcard.list_videos", "List only the MJPEG videos on the microSD card.",
-            PropertyList(), [this](const PropertyList&) -> ToolResult { return ListMedia("video"); });
+            PropertyList(),
+            [this](const PropertyList&) -> ToolResult { return ListMedia("video"); });
         mcp_server.AddTool(
             "self.sdcard.list_music", "List only the MP3 music files on the microSD card.",
-            PropertyList(), [this](const PropertyList&) -> ToolResult { return ListMedia("audio"); });
+            PropertyList(),
+            [this](const PropertyList&) -> ToolResult { return ListMedia("audio"); });
         Property delete_path("path", kPropertyTypeString);
         delete_path.SetMaxLength(128);
         mcp_server.AddTool(
@@ -560,7 +573,8 @@ private:
                 if (!camera_->Capture()) {
                     return std::unexpected("Camera capture failed");
                 }
-                if (!camera_->SaveJpeg((std::string(SD_CARD_MOUNT_POINT) + "/" + relative_path).c_str())) {
+                if (!camera_->SaveJpeg(
+                        (std::string(SD_CARD_MOUNT_POINT) + "/" + relative_path).c_str())) {
                     return std::unexpected("Could not encode or write the photo");
                 }
                 return ReturnValue{relative_path};
@@ -577,7 +591,8 @@ private:
                 const std::string extension = LowercaseExtension(path);
                 if (!IsSafeMediaPath(path) ||
                     (extension != ".jpg" && extension != ".jpeg" && extension != ".png")) {
-                    return std::unexpected("Path must name a JPG, JPEG, or PNG file on the SD card");
+                    return std::unexpected(
+                        "Path must name a JPG, JPEG, or PNG file on the SD card");
                 }
                 if (!EnsureSdCardMounted()) {
                     return std::unexpected("Could not mount the SD card");
@@ -609,18 +624,73 @@ private:
                 return ReturnValue{new ImageContent(mime_type, data)};
             });
 
+        Property save_data("data", kPropertyTypeString);
+        save_data.SetMaxLength(4 * 1024 * 1024);
+        Property save_path("path", kPropertyTypeString);
+        save_path.SetMaxLength(128);
+        mcp_server.AddTool(
+            "self.sdcard.save_image",
+            "Save a base64-encoded image to the microSD card. Provide 'data' (base64) and 'path' "
+            "(relative path ending in .jpg, .jpeg, or .png). Returns the saved path.",
+            PropertyList({save_data, save_path}),
+            [this](const PropertyList& properties) -> ToolResult {
+                const std::string data_b64 = properties["data"].value<std::string>();
+                const std::string path = properties["path"].value<std::string>();
+                const std::string extension = LowercaseExtension(path);
+                if (!IsSafeMediaPath(path) ||
+                    (extension != ".jpg" && extension != ".jpeg" && extension != ".png")) {
+                    return std::unexpected(
+                        "Path must be a safe relative path ending in .jpg, .jpeg, or .png");
+                }
+                if (!EnsureSdCardMounted()) {
+                    return std::unexpected("Could not mount the SD card");
+                }
+
+                size_t decoded_len = 0;
+                mbedtls_base64_decode(nullptr, 0, &decoded_len,
+                                      reinterpret_cast<const unsigned char*>(data_b64.data()),
+                                      data_b64.size());
+                if (decoded_len == 0 || decoded_len > 8 * 1024 * 1024) {
+                    return std::unexpected("Decoded image size is invalid or exceeds 8 MB");
+                }
+                std::string decoded(decoded_len, '\0');
+                size_t actual_len = 0;
+                if (mbedtls_base64_decode(reinterpret_cast<unsigned char*>(decoded.data()),
+                                          decoded.size(), &actual_len,
+                                          reinterpret_cast<const unsigned char*>(data_b64.data()),
+                                          data_b64.size()) != 0) {
+                    return std::unexpected("Failed to decode base64 image data");
+                }
+                decoded.resize(actual_len);
+
+                const std::string full_path = std::string(SD_CARD_MOUNT_POINT) + "/" + path;
+                FILE* file = fopen(full_path.c_str(), "wb");
+                if (file == nullptr) {
+                    return std::unexpected("Could not create the file on the SD card");
+                }
+                size_t written = fwrite(decoded.data(), 1, decoded.size(), file);
+                fclose(file);
+                if (written != decoded.size()) {
+                    return std::unexpected("Failed to write the complete image to the SD card");
+                }
+                return ReturnValue{path};
+            });
+
         Property display_image_path("path", kPropertyTypeString);
         display_image_path.SetMaxLength(128);
         mcp_server.AddTool(
             "self.sdcard.show_image",
             "Display a JPEG or PNG image fullscreen on the MAX35. Use a path returned by "
-            "self.sdcard.list_media. This is for on-device viewing; use read_image for AI analysis.",
-            PropertyList({display_image_path}), [this](const PropertyList& properties) -> ToolResult {
+            "self.sdcard.list_media. This is for on-device viewing; use read_image for AI "
+            "analysis.",
+            PropertyList({display_image_path}),
+            [this](const PropertyList& properties) -> ToolResult {
                 const std::string path = properties["path"].value<std::string>();
                 const std::string extension = LowercaseExtension(path);
                 if (!IsSafeMediaPath(path) ||
                     (extension != ".jpg" && extension != ".jpeg" && extension != ".png")) {
-                    return std::unexpected("Path must name a JPG, JPEG, or PNG file on the SD card");
+                    return std::unexpected(
+                        "Path must name a JPG, JPEG, or PNG file on the SD card");
                 }
                 if (!EnsureSdCardMounted()) {
                     return std::unexpected("Could not mount the SD card");
@@ -648,8 +718,7 @@ private:
                 }
                 const auto* image_data = reinterpret_cast<const uint8_t*>(data.data());
                 if (extension == ".png") {
-                    if (data.size() < 24 ||
-                        memcmp(image_data, "\x89PNG\r\n\x1a\n", 8) != 0) {
+                    if (data.size() < 24 || memcmp(image_data, "\x89PNG\r\n\x1a\n", 8) != 0) {
                         return std::unexpected("PNG signature or header is invalid");
                     }
                     const uint32_t width = (static_cast<uint32_t>(image_data[16]) << 24) |
@@ -674,17 +743,19 @@ private:
                     }
                 }
                 bool displayed = extension == ".png"
-                                     ? display_->ShowPngImage(image_data, data.size())
-                                     : DecodeJpegAndShow(display_, image_data, data.size());
+                                     ? display_->ShowPngImage(image_data, data.size(), 90)
+                                     : DecodeJpegAndShow(display_, image_data, data.size(), 90);
                 if (!displayed) {
                     return std::unexpected(
                         extension == ".png"
                             ? "PNG decoding failed; retry with a standard non-animated PNG"
-                            : "JPEG display failed; progressive JPEG encoding may not be supported");
+                            : "JPEG display failed; progressive JPEG encoding may not be "
+                              "supported");
                 }
                 image_shown_.store(true);
-                return ReturnValue{std::string("Image displayed on the MAX35; press the boot button "
-                                               "or call self.sdcard.close_media to return to chat")};
+                return ReturnValue{
+                    std::string("Image displayed on the MAX35; press the boot button "
+                                "or call self.sdcard.close_media to return to chat")};
             });
 
         Property video_path("path", kPropertyTypeString);
@@ -701,7 +772,8 @@ private:
                 const std::string extension = LowercaseExtension(path);
                 if (!IsSafeMediaPath(path) ||
                     (extension != ".mjpeg" && extension != ".mjpg" && extension != ".mjp")) {
-                    return std::unexpected("Path must name an MJPEG, MJP, or MJPG file on the SD card");
+                    return std::unexpected(
+                        "Path must name an MJPEG, MJP, or MJPG file on the SD card");
                 }
                 if (!EnsureSdCardMounted()) {
                     return std::unexpected("Could not mount the SD card");
@@ -757,9 +829,10 @@ private:
                     }
                 }
                 fclose(file);
-                return std::unexpected(bytes_scanned >= kMaxBytesScanned
-                                           ? "No JPEG frame found in the first 8 MB; use a raw MJPEG file"
-                                           : "Requested JPEG frame was not found in the video");
+                return std::unexpected(
+                    bytes_scanned >= kMaxBytesScanned
+                        ? "No JPEG frame found in the first 8 MB; use a raw MJPEG file"
+                        : "Requested JPEG frame was not found in the video");
             });
 
         Property playback_path("path", kPropertyTypeString);
@@ -781,22 +854,80 @@ private:
                     return std::unexpected("Could not mount the SD card");
                 }
                 if (!StartVideoPlayback(path, properties["loop"].value<bool>())) {
-                    return std::unexpected("Video playback is already active or task creation failed");
+                    return std::unexpected(
+                        "Video playback is already active or task creation failed");
                 }
                 return ReturnValue{std::string("Video playback started")};
             });
 
+        mcp_server.AddTool("self.sdcard.stop_video",
+                           "Stop SD-card video playback and return to the chat screen.",
+                           PropertyList(), [this](const PropertyList&) -> ReturnValue {
+                               if (!video_playing_.load()) {
+                                   return false;
+                               }
+                               video_stop_requested_.store(true);
+                               return true;
+                           });
+
+#if CONFIG_USE_USB_MSC
+        // USB MSC MCP tools for controlling mount point
+        mcp_server.AddTool("self.usbmsc.expose",
+                           "Expose the microSD card to a host PC over USB OTG. The card will be "
+                           "accessible as a USB drive.",
+                           PropertyList(), [this](const PropertyList&) -> ToolResult {
+                               if (!EnsureSdCardMounted()) {
+                                   return std::unexpected("Could not mount the SD card");
+                               }
+
+                               auto& usb_msc_inst = usb_msc::UsbMsc::GetInstance();
+                               if (!usb_msc_inst.IsInitialized()) {
+                                   esp_err_t err = usb_msc_inst.Initialize(sd_card_);
+                                   if (err != ESP_OK) {
+                                       return std::unexpected(usb_msc_inst.GetLastError());
+                                   }
+                               }
+                               esp_err_t err =
+                                   usb_msc_inst.SetMountPoint(usb_msc::MountPoint::kUsb);
+                               if (err != ESP_OK) {
+                                   return std::unexpected(usb_msc_inst.GetLastError());
+                               }
+                               return ReturnValue{"USB MSC mount point set to USB host"};
+                           });
+
         mcp_server.AddTool(
-            "self.sdcard.stop_video", "Stop SD-card video playback and return to the chat screen.",
-            PropertyList(), [this](const PropertyList&) -> ReturnValue {
-                if (!video_playing_.load()) {
-                    return false;
+            "self.usbmsc.retract",
+            "Return the microSD card to application control. The host can no longer access the "
+            "card.",
+            PropertyList(), [this](const PropertyList&) -> ToolResult {
+                esp_err_t err =
+                    usb_msc::UsbMsc::GetInstance().SetMountPoint(usb_msc::MountPoint::kApp);
+                if (err != ESP_OK) {
+                    return std::unexpected(usb_msc::UsbMsc::GetInstance().GetLastError());
                 }
-                video_stop_requested_.store(true);
-                return true;
+                return ReturnValue{"USB MSC mount point set to application"};
             });
 
+        mcp_server.AddTool(
+            "self.usbmsc.status",
+            "Get the current USB MSC status (whether the card is exposed to a host or not).",
+            PropertyList(), [this](const PropertyList&) -> ToolResult {
+                bool exposed = usb_msc::UsbMsc::GetInstance().IsExposedToHost();
+                return ReturnValue{exposed ? "USB MSC is exposed to host"
+                                           : "USB MSC is not exposed (card owned by application)"};
+            });
+#endif
     }
+
+#if CONFIG_USE_SDCARD_SLIDESHOW
+    void InitializeSlideshow() {
+        slideshow_ = new slideshow::SlideshowMCP(display_, "/sdcard/slideshow.json");
+        if (slideshow_ != nullptr) {
+            slideshow_->Initialize();
+            slideshow_->RegisterTools(&McpServer::GetInstance());
+        }
+    }
+#endif
 
     void InitializeI2c() {
         i2c_master_bus_config_t config = {
@@ -911,6 +1042,15 @@ public:
         InitializeCamera();
         InitializeButtons();
         InitializeTools();
+        // The microSD card is NOT mounted at boot.  The SD card shares CLK/CMD
+        // (GPIO 43/44) with the console UART, so an early mount + access
+        // repeatedly trips the task watchdog and reboots the device.  The SD
+        // card is mounted on demand by the MCP tools (sdcard.* / usbmsc.*)
+        // when the agent needs it.
+        // USB MSC is intentionally NOT initialised at boot.  The SD card stays
+        // with the application only; the host gets access only when the agent
+        // explicitly calls self.usbmsc.expose (which initialises the TinyUSB
+        // device stack on first use).
         GetBacklight()->RestoreBrightness();
     }
 
